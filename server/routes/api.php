@@ -24,16 +24,14 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::group([
     'middleware' => 'auth:sanctum',//access with middleware with connection
 ], function () {
-    Route::get('/logout',  [AuthController::class, 'logout']);
+    Route::get('/logout', [AuthController::class, 'logout']);
 
-    Route::get('/user',  function (Request $request) {
-                                return $request->user();
-                         });
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 
 });
 
 
-Route::get('/test',function() {
-    return "Hello";
-});
-
+Route::apiResource('articles', \App\Http\Controllers\ArticleController::class);
+Route::apiResource('tags', \App\Http\Controllers\TagsController::class);
