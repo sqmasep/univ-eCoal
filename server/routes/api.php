@@ -22,7 +22,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::group([
-    'middleware' => 'auth:sanctum',
+    'middleware' => 'auth:sanctum',//access with middleware with connection
 ], function () {
     Route::get('/logout',  [AuthController::class, 'logout']);
 
