@@ -16,7 +16,7 @@ const Logo: React.FC = () => {
           backgroundColor: theme => theme.palette.primary.main,
         }}
       />
-      <Typography variant='h6' component='p'>
+      <Typography variant='h4' component='p'>
         doremi
       </Typography>
     </Box>

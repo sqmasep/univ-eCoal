@@ -13,6 +13,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import CategoryPage from "./pages/CategoryPage";
 
 const routes: RouteObject[] = [
   {
@@ -27,6 +28,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/tags/:tag",
+    element: <CategoryPage />,
   },
 ];
 
