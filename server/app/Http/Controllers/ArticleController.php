@@ -20,13 +20,22 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'thumbnailURL' => 'required',
+            'mediaType' => 'required',
+            'mediaURL' => 'required',
+            'leadStory' => 'required',
+        ]);
         $newArticle = Article::create([
-            'title'=>$request->input('title'),
-            'content'=>$request->input('content'),
-            'thumbnailURL'=>$request->input('thumbnailURL'),
-            'mediaType'=>$request->input('mediaType'),
-            'mediaURL'=>$request->input('mediaURL'),
-            'leadStory'=>$request->input('leadStory')
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'thumbnailURL' => $request->input('thumbnailURL'),
+
+            'mediaType' => $request->input('mediaType'),
+            'mediaURL' => $request->input('mediaURL'),
+            'leadStory' => $request->input('leadStory')
         ]);
         return response($newArticle, 201);
     }
@@ -36,6 +45,9 @@ class ArticleController extends Controller
      */
     public function show(string $id)
     {
+        $upCount = Article::find($id);
+        $upCount->viewCount = $upCount->viewCount + 1;
+        $upCount->save();
         return Article::find($id);
     }
 
@@ -44,6 +56,14 @@ class ArticleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'thumbnailURL' => 'required',
+            'mediaType' => 'required',
+            'mediaURL' => 'required',
+            'leadStory' => 'required',
+        ]);
         $articleUpdate = Article::find($id);
         $articleUpdate->title = $request->input('title');
         $articleUpdate->content = $request->input('content');
@@ -63,5 +83,10 @@ class ArticleController extends Controller
         $articleDelete = Article::find($id);
         $articleDelete->delete();
         return response(null, 204);
+    }
+
+    public function searchFunction(string $searchContent)
+    {
+        return Article::whereRaw("title like '%'||?||'%'", [$searchContent])->get(); // Search Data from $searchContent and
     }
 }

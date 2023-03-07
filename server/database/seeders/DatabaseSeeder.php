@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'thumbnailURL' => '/ecoal.jpg',
             'mediaType' => 'image',
             'mediaURL' => '/ecoal.jpg',
-            'leadStory' => false
+            'leadStory' => false,
         ]);
 
         $tag1 = Tag::create(['name' => 'ecoal23']);

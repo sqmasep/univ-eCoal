@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('mediaType')->nullable();
             $table->string('mediaURL')->nullable();
             $table->boolean('leadStory');
+            $table->integer('viewCount')->default(0);
             $table->timestamps();
         });
     }
