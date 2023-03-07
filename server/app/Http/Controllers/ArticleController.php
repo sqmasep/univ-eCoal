@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -89,4 +91,15 @@ class ArticleController extends Controller
     {
         return Article::whereRaw("title like '%'||?||'%'", [$searchContent])->get(); // Search Data from $searchContent and
     }
+
+    public function searchFunctionByTag(string $tag)
+    {
+        $tags = Tag::find($tag);
+        // get articles by tag with article_tag table
+        return DB::table('article_tag')
+            ->join('articles', 'article_tag.article_id', '=', 'articles.id')
+            ->select('articles.*')
+            ->where('article_tag.tag_id', '=', $tags->id);
+    }
+
 }
