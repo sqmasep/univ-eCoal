@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -36,6 +37,9 @@ class ArticleController extends Controller
      */
     public function show(string $id)
     {
+        $upCount = Article::find($id);
+        $upCount->viewCount = $upCount->viewCount + 1;
+        $upCount->save();
         return Article::find($id);
     }
 
@@ -63,5 +67,9 @@ class ArticleController extends Controller
         $articleDelete = Article::find($id);
         $articleDelete->delete();
         return response(null, 204);
+    }
+
+    public function searchFunction(string $searchContent){
+      return Article::whereRaw("title like '%'||?||'%'", [$searchContent])->get(); // Search Data from $searchContent and
     }
 }
