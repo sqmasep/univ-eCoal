@@ -12,7 +12,7 @@ const Category: React.FC<CategoryProps> = ({ name }) => {
       <Typography>{name}</Typography>
       <Swiper slidesPerView={1.2} spaceBetween={1} style={{ overflow: "none" }}>
         {[...Array(9).keys()].map(e => (
-          <SwiperSlide style={{ padding: "" }} key={e}>
+          <SwiperSlide key={e}>
             <ArticlePreview
               sx={{ m: 2 }}
               title='title'

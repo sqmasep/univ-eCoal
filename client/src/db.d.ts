@@ -13,6 +13,8 @@ export interface User {
 export interface Tag {
   id: DbId;
   name: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface Article {
@@ -22,6 +24,7 @@ export interface Article {
   thumbnailUrl: string;
   mediaType?: string;
   mediaUrl?: string;
+  viewCount: number;
   leadStory: boolean;
   created_at: string;
   updated_at: string;
