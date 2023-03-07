@@ -24,6 +24,7 @@ specifiers:
   vite: ^4.1.0
   vite-tsconfig-paths: ^4.0.5
   zod: ^3.21.0
+  zod-formik-adapter: ^1.2.0
   zustand: ^4.3.5
 
 dependencies:
@@ -44,6 +45,7 @@ dependencies:
   react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
   swiper: 9.1.0
   zod: 3.21.0
+  zod-formik-adapter: 1.2.0_formik@2.2.9+zod@3.21.0
   zustand: 4.3.5_react@18.2.0
 
 devDependencies:
@@ -1825,6 +1827,16 @@ packages:
   /yaml/1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
+    dev: false
+
+  /zod-formik-adapter/1.2.0_formik@2.2.9+zod@3.21.0:
+    resolution: {integrity: sha512-62U+Mf8U05pvLsIMUTC1H6d4K5SmsrXM+YgiZhCpPin5GNhnVuXCGySmJCs0FHuTJCBy7Et5Z1i8KF5ffuLttg==}
+    peerDependencies:
+      formik: ^2.2.9
+      zod: ^3.14.4
+    dependencies:
+      formik: 2.2.9_react@18.2.0
+      zod: 3.21.0
     dev: false
 
   /zod/3.21.0:

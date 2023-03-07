@@ -7,18 +7,26 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/query/client";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AnimatePresence } from "framer-motion";
-import Navbar from "./components/ui/Navbar";
-import Overlay from "./components/ui/Overlay";
+import CategoryPage from "./pages/CategoryPage";
+import Layout from "./components/ui/Layout";
+import Profile from "./pages/Profile";
+import AnimatedPage from "./components/AnimatedPage";
+import Register from "./pages/Register";
+import NotFound from "./pages/NotFound";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import CategoryPage from "./pages/CategoryPage";
+import Login from "./pages/Login";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <AnimatedPage>
+        <Home />
+      </AnimatedPage>
+    ),
   },
   {
     path: "/articles",
@@ -29,6 +37,38 @@ const routes: RouteObject[] = [
   {
     path: "/tags/:tag",
     element: <CategoryPage />,
+  },
+  {
+    path: "/login",
+    element: (
+      <AnimatedPage>
+        <Login />
+      </AnimatedPage>
+    ),
+  },
+  {
+    path: "/register",
+    element: (
+      <AnimatedPage>
+        <Register />
+      </AnimatedPage>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <AnimatedPage>
+        <Profile />
+      </AnimatedPage>
+    ),
+  },
+  {
+    path: "*",
+    element: (
+      <AnimatedPage>
+        <NotFound />
+      </AnimatedPage>
+    ),
   },
 ];
 
@@ -41,14 +81,14 @@ const App: React.FC = () => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ReactQueryDevtools position='top-right' initialIsOpen={false} />
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Navbar />
-          <Overlay />
-          <AnimatePresence>
-            {React.cloneElement(element, { key: location.pathname })}
-          </AnimatePresence>
+          <Layout>
+            <AnimatePresence mode='wait'>
+              {React.cloneElement(element, { key: location.pathname })}
+            </AnimatePresence>
+          </Layout>
         </ThemeProvider>
       </QueryClientProvider>
     </>
