@@ -12,5 +12,19 @@ export const loginInitialValues: LoginValues = {
   password: "",
 };
 
+export const loginFields: {
+  label: string;
+  name: keyof LoginValues;
+}[] = [
+  {
+    label: "Email",
+    name: "email",
+  },
+  {
+    label: "Password",
+    name: "password",
+  },
+];
+
 export const formikLoginSchema = toFormikValidationSchema(loginSchema);
 export type LoginValues = z.infer<typeof loginSchema>;
