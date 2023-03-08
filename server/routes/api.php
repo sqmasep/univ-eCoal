@@ -28,7 +28,7 @@ Route::group([
         return $request->user();
     });
 });
-Route::apiResource('articles', \App\Http\Controllers\ArticleController::class); // Api for the articles
+Route::apiResource('articles', \App\Http\Controllers\ArticleController::class)->middleware('adminConfirmation'); // Api for the articles
 Route::apiResource('tags', \App\Http\Controllers\TagsController::class); // Api for the tags
 Route::get('/search/{search}', [\App\Http\Controllers\ArticleController::class, "searchFunction"]);//Search for the search Bar
 Route::get('/articles/bytag={tag}', [\App\Http\Controllers\ArticleController::class, "searchFunctionByTag"]);//Search for article by tag

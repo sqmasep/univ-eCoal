@@ -30,12 +30,23 @@ class ArticleController extends Controller
             'mediaURL' => 'file|required',
             'leadStory' => 'required',
         ]);
+
+        //Make the media
+        $media = $request->file('mediaURL')->hashName();
+        $request->file('mediaURL')->move('upload',$media);
+        //Make thumbnailURL
+        if ($request->input('mediaType')=='IMAGE'){
+            $thumbnailURL = $media;
+        }else if ($request->input('mediaType')=='VIDEO'){
+            $thumbnailURL = $request->input('thumbnailURL');
+        }
+
         $newArticle = Article::create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
-            'thumbnailURL' => $request->input('thumbnailURL'),
-            'mediaType' => $request->input('mediaType'),
-            'mediaURL' => $request->input('mediaURL'),
+            'thumbnailURL' => $thumbnailURL,
+            'mediaType' =>  $request->input('mediaType'),
+            'mediaURL' => $media,
             'leadStory' => $request->input('leadStory')
         ]);
         return response($newArticle, 201);
