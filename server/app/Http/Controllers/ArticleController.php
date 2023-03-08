@@ -22,22 +22,31 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'thumbnailURL' => 'required',
-            'mediaType' => 'required',
-            'mediaURL' => 'file|required',
-            'leadStory' => 'required',
-        ]);
-
+        if ($request->input('mediaType') == 'VIDEO') {
+            $request->validate([
+                'title' => 'required',
+                'content' => 'required',
+                'thumbnailURL' => 'required',
+                'mediaType' => 'required',
+                'mediaURL' => 'file|required',
+                'leadStory' => 'required',
+            ]);
+        } else {
+            $request->validate([
+                'title' => 'required',
+                'content' => 'required',
+                'mediaType' => 'required',
+                'mediaURL' => 'file|required',
+                'leadStory' => 'required',
+            ]);
+        }
         //Make the media
         $media = $request->file('mediaURL')->hashName();
-        $request->file('mediaURL')->move('upload',$media);
+        $request->file('mediaURL')->move('upload', $media);
         //Make thumbnailURL
-        if ($request->input('mediaType')=='IMAGE'){
+        if ($request->input('mediaType') == 'IMAGE') {
             $thumbnailURL = $media;
-        }else if ($request->input('mediaType')=='VIDEO'){
+        } else if ($request->input('mediaType') == 'VIDEO') {//In React do that : If mediaType == VIDEO then make thumbnailURL required
             $thumbnailURL = $request->input('thumbnailURL');
         }
 
@@ -45,7 +54,7 @@ class ArticleController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'thumbnailURL' => $thumbnailURL,
-            'mediaType' =>  $request->input('mediaType'),
+            'mediaType' => $request->input('mediaType'),
             'mediaURL' => $media,
             'leadStory' => $request->input('leadStory')
         ]);
