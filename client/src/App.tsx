@@ -18,6 +18,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Login from "./pages/Login";
+import Search from "./components/ui/Search";
 
 const routes: RouteObject[] = [
   {
@@ -37,6 +38,10 @@ const routes: RouteObject[] = [
   {
     path: "/tags/:tag",
     element: <CategoryPage />,
+  },
+  {
+    path: "/search",
+    element: <Search />,
   },
   {
     path: "/login",

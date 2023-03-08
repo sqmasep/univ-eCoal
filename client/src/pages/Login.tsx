@@ -5,21 +5,41 @@ import {
   loginInitialValues,
   LoginValues,
 } from "@/lib/validationSchema/login";
-import { Button, Container, Stack, TextField, Typography } from "@mui/material";
+import useUser from "@/store/userStore";
+import {
+  Alert,
+  Button,
+  Container,
+  Snackbar,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { Field, Form, Formik, FormikHelpers } from "formik";
+import { useNavigate } from "react-router-dom";
 import TextFields from "../components/TextFields";
 
 const Login: React.FC = () => {
-  const loginMutation = useMutation({
+  const setToken = useUser(state => state.setToken);
+  const navigate = useNavigate();
+  const { isSuccess, data, isLoading, isError, error, mutate } = useMutation({
     mutationFn: loginMutationFn,
   });
+  const token = data?.data.access_token;
+
+  if (isSuccess && token) {
+    setToken(token);
+
+    navigate("/");
+  }
 
   const handleSubmit = (
     values: LoginValues,
     helpers: FormikHelpers<LoginValues>
   ) => {
-    loginMutation.mutate(values);
+    mutate(values);
+    helpers.resetForm();
   };
 
   return (
@@ -41,6 +61,11 @@ const Login: React.FC = () => {
           </Stack>
         )}
       </Formik>
+      <Snackbar open={isSuccess || isError} autoHideDuration={4000}>
+        <Alert severity={isSuccess ? "success" : "error"}>
+          {isSuccess ? "You're now logged in!" : <>{error}</>}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

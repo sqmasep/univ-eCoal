@@ -1,7 +1,8 @@
 import { tags } from "@/lib/query/tags";
-import { Chip } from "@mui/material";
+import { Chip, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { blue } from "@mui/material/colors";
 
 const Search: React.FC = () => {
   const { data, isLoading, isError } = useQuery(
@@ -10,8 +11,12 @@ const Search: React.FC = () => {
   );
   return (
     <>
+      <Typography variant='h3' component='h1'>
+        Search
+      </Typography>
       {data?.data.map(tag => (
         <Chip
+          sx={{ backgroundColor: blue[100] }}
           key={tag.id}
           label={tag.name}
           component={Link}
@@ -21,3 +26,5 @@ const Search: React.FC = () => {
     </>
   );
 };
+
+export default Search;
