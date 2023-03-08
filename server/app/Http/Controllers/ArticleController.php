@@ -102,7 +102,7 @@ class ArticleController extends Controller
         return Article::whereRaw("title like '%'||?||'%'", [$searchContent])->get(); // Search Data from $searchContent and
     }
 
-    public function searchFunctionByTag(string $tag)
+    public function searchFunctionByTag(string $tag)//Doesn't work
     {
         $tags = Tag::find($tag);
         // get articles by tag with article_tag table

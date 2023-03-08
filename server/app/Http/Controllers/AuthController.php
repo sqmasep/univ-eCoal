@@ -20,19 +20,20 @@ class AuthController extends Controller
             'confirmPassword' => 'required|string|min:8|same:password',//Confirm Password
         ]);
 
-            $user = User::create([//creation of the user
-                'name' => $validatedData['name'],
-                'email' => $validatedData['email'],
-                'password' => Hash::make($validatedData['password']),
-                'role' => 'USER',
-            ]);
-            $token = $user->createToken('auth_token')->plainTextToken;//token authentification (identify user)
-            return response()->json([ //send Json response to client
+        $user = User::create([//creation of the user
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+            'role' => 'USER',
+        ]);
+        $token = $user->createToken('auth_token')->plainTextToken;//token authentification (identify user)
+        return response()->json([ //send Json response to client
                 'access_token' => $token,//Session Cookie (like)
                 'token_type' => 'Bearer',
-            ]);
+            ]) . redirect('/');
 
     }
+
     public function login(Request $request)
     {
         $validatedData = $request->validate([
