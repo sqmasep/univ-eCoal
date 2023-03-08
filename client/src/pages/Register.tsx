@@ -6,20 +6,39 @@ import {
   registerInitialValues,
   RegisterValues,
 } from "@/lib/validationSchema/register";
-import { Button, Container, Stack, TextField, Typography } from "@mui/material";
+import useUser from "@/store/userStore";
+import {
+  Alert,
+  Button,
+  Container,
+  Snackbar,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import { Field, Formik, FormikHelpers } from "formik";
+import { Field, Form, Formik, FormikHelpers } from "formik";
+import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
-  const registerMutation = useMutation({
+  const setToken = useUser(state => state.setToken);
+  const navigate = useNavigate();
+  const { isSuccess, data, isLoading, isError, error, mutate } = useMutation({
     mutationFn: registerMutationFn,
   });
+  const token = data?.data.access_token;
+
+  if (isSuccess && token) {
+    setToken(token);
+    // navigate("/");
+  }
 
   const handleSubmit = (
     values: RegisterValues,
     helpers: FormikHelpers<RegisterValues>
   ) => {
-    registerMutation.mutate(values);
+    mutate(values);
+    helpers.resetForm();
   };
 
   return (
@@ -30,18 +49,31 @@ const Register: React.FC = () => {
         onSubmit={handleSubmit}
       >
         {({ values, touched, errors }) => (
-          <Stack mt={8} gap={1}>
-            <Typography sx={{ my: 2 }} variant='h3' component='h1'>
-              Register
-            </Typography>
-            <TextFields of={registerFields} errors={errors} touched={touched} />
-            <Button sx={{ mt: 2 }} variant='contained'>
-              I register now!
-            </Button>
-          </Stack>
+          <Form>
+            <Stack mt={8} gap={1}>
+              <Typography sx={{ my: 2 }} variant='h3' component='h1'>
+                Register
+              </Typography>
+              <TextFields
+                of={registerFields}
+                errors={errors}
+                touched={touched}
+              />
+              <Button type='submit' sx={{ mt: 2 }} variant='contained'>
+                I register now!
+              </Button>
+            </Stack>
+          </Form>
         )}
       </Formik>
-      {registerMutation.isSuccess && "success! you registered"}
+      <Snackbar open={isSuccess || isError} autoHideDuration={4000}>
+        <Alert severity={isSuccess ? "success" : "error"}>
+          {isSuccess ? "You're now logged in!" : <>{isError && data}</>}
+        </Alert>
+      </Snackbar>
+      <pre>{JSON.stringify(data?.data?.access_token, null, 2)}</pre>
+
+      <pre>{JSON.stringify(error, null, 2)}</pre>
     </Container>
   );
 };
