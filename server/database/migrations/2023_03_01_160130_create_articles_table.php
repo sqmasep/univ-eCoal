@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('title');
             $table->text('content');
             $table->string('thumbnailURL');
-            $table->string('mediaType')->nullable();
+            $table->enum('mediaType', ['IMAGE','VIDEO','AUDIO'])->nullable();
             $table->string('mediaURL')->nullable();
             $table->boolean('leadStory');
             $table->integer('viewCount')->default(0);

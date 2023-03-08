@@ -18,18 +18,31 @@ class DatabaseSeeder extends Seeder
     {
 
         $user = User::create([
-            'name'=>'Hugo',
-            'email'=> 'hugodemont@hotmail.fr',
+            'name'=>'HugoAdmin',
+            'email'=> 'hugodemontadmin@hotmail.fr',
             'password'=>'undeuxtrois',
             'role'=>'ADMIN',
         ]);
-
+        $user = User::create([
+            'name'=>'Hugo',
+            'email'=> 'hugodemont@hotmail.fr',
+            'password'=>'undeuxtrois',
+            'role'=>'USER',
+        ]);
         $article = Article::create([
             'title' => 'Welcome to ecoal23',
             'content' => '<h1>Hello from ecoal</h1><p>Nice to see you in <strong>Lens</strong>. Enjoy !</p>',
             'thumbnailURL' => '/ecoal.jpg',
-            'mediaType' => 'image',
+            'mediaType' => 'IMAGE',
             'mediaURL' => '/ecoal.jpg',
+            'leadStory' => false,
+        ]);
+        $article2 = Article::create([
+            'title' => 'Welcome to routes landsssss',
+            'content' => '<h1>Un article test</h1><p>hello test <strong>Lens</strong>. notEnjoy !</p>',
+            'thumbnailURL' => '/ecoal.mp4   ',
+            'mediaType' => 'VIDEO',
+            'mediaURL' => '/ecoal.mp4',
             'leadStory' => false,
         ]);
 

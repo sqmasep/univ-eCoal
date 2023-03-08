@@ -27,14 +27,13 @@ class ArticleController extends Controller
             'content' => 'required',
             'thumbnailURL' => 'required',
             'mediaType' => 'required',
-            'mediaURL' => 'required',
+            'mediaURL' => 'file|required',
             'leadStory' => 'required',
         ]);
         $newArticle = Article::create([
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'thumbnailURL' => $request->input('thumbnailURL'),
-
             'mediaType' => $request->input('mediaType'),
             'mediaURL' => $request->input('mediaURL'),
             'leadStory' => $request->input('leadStory')
