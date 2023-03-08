@@ -17,10 +17,13 @@ declare module "@mui/material/styles" {
   }
 }
 
+const COEFFICIENT = 0.25;
+
 let theme = createTheme({
   styling: {
-    outline: coeff => `${coeff * 0.25}em solid black`,
-    shadow: coeff => `${coeff * 0.25}em ${coeff * 0.25}em 0 black`,
+    outline: coeff => `${coeff * COEFFICIENT}em solid black`,
+    shadow: coeff =>
+      `${coeff * COEFFICIENT}em ${coeff * COEFFICIENT}em 0 black`,
   },
   palette: {
     // mode: "dark",
@@ -65,6 +68,26 @@ theme = createTheme(theme, {
         root: {
           outline: theme.styling.outline(1),
           backgroundColor: theme.palette.primary.main,
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          outline: theme.styling.outline(1),
+          boxShadow: theme.styling.shadow(2),
+          transition: ".2s",
+          "&:is(:hover, :focus-visible)": {
+            transform: `translate(${2 * COEFFICIENT}em, ${2 * COEFFICIENT}em)`,
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: {
+          border: theme.styling.outline(0.5),
+          boxShadow: theme.styling.shadow(0.5),
         },
       },
     },

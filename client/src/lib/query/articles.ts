@@ -9,8 +9,8 @@ const articlesKeys = {
 };
 
 const articleQueries = {
-  all: async () => await axios.get("/articles"),
-  byId: (id: string) => async () => await axios.get(`/articles/${id}`),
+  all: async () => await axios.get<Article[]>("/articles"),
+  byId: (id: string) => async () => await axios.get<Article>(`/articles/${id}`),
   byTag: (tag: string | undefined) => async () =>
     await axios.get<Article[]>(`/articles?tag=${tag}`),
 } satisfies QueryFields<typeof articlesKeys>;
