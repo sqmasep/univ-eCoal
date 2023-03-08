@@ -14,26 +14,25 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',//name
             'email' => 'required|string|email|max:255|unique:users',//primary key
-            'password' => 'required|string|min:8',
+            'password' => 'required|string|min:8',//Password
+            'confirmPassword' => 'required|string|min:8|same:password',//Confirm Password
         ]);
 
-        $user = User::create([//creation of the user
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-        ]);
+            $user = User::create([//creation of the user
+                'name' => $validatedData['name'],
+                'email' => $validatedData['email'],
+                'password' => Hash::make($validatedData['password']),
+                'role' => 'USER',
+            ]);
+            $token = $user->createToken('auth_token')->plainTextToken;//token authentification (identify user)
+            return response()->json([ //send Json response to client
+                'access_token' => $token,//Session Cookie (like)
+                'token_type' => 'Bearer',
+            ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;//token authentification (identify user)
-
-        return response()->json([ //send Json response to client
-            'access_token' => $token,//Session Cookie (like)
-            'token_type' => 'Bearer',
-        ]);
     }
-
-
     public function login(Request $request)
     {
         $validatedData = $request->validate([
