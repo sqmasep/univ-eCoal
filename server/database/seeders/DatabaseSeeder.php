@@ -40,24 +40,24 @@ class DatabaseSeeder extends Seeder
         $article2 = Article::create([
             'title' => 'Welcome to routes landsssss',
             'content' => '<h1>Un article test</h1><p>hello test <strong>Lens</strong>. notEnjoy !</p>',
-            'thumbnailURL' => '/ecoal.mp4   ',
+            'thumbnailURL' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Rust_programming_language_black_logo.svg/2048px-Rust_programming_language_black_logo.svg.png',
             'mediaType' => 'VIDEO',
             'mediaURL' => '/ecoal.mp4',
             'leadStory' => false,
         ]);
 
         $tag1 = Tag::create([
-            'name' => 'POP',
+            'name' => 'pop',
             'image' => 'https://backoffice.industrie-online.com/api/v1/image/41747?w=525&h=525']
         );
         $tag2 = Tag::create([
-            'name' => 'react',
+            'name' => 'jazz',
             'image'=>'https://cdn.shopify.com/s/files/1/1530/4015/products/IMG_0008_1090x.jpg?v=1670194640'
 
         ]);
 
         $article->tags()->attach([$tag1->id, $tag2->id]);
-        $article->tags()->attach([$tag1->id]);
+        $article2->tags()->attach([$tag1->id]);
 
     }
 }

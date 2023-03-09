@@ -1,5 +1,6 @@
 import Loading from "@/components/ui/Loading";
 import { articles } from "@/lib/query/articles";
+import { Container } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
@@ -11,9 +12,9 @@ const CategoryPage: React.FC = () => {
   );
 
   return (
-    <>
+    <Container>
       <pre>{JSON.stringify(data, null, 2)}</pre>
-    </>
+    </Container>
   );
 };
 

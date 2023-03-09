@@ -1,4 +1,4 @@
-import { Card, Typography } from "@mui/material";
+import { Card, CardContent, Typography } from "@mui/material";
 
 interface SearchPreviewProps {
   articleId: number;
@@ -13,8 +13,12 @@ const SearchPreview: React.FC<SearchPreviewProps> = ({
 }) => {
   return (
     <Card>
-      <Typography>{title}</Typography>
-      id: {articleId}
+      <CardContent>
+        <Typography variant='h4' component='h2'>
+          {title}
+        </Typography>
+        id: {articleId}
+      </CardContent>
     </Card>
   );
 };

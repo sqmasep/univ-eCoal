@@ -23,9 +23,9 @@ export interface Article {
   id: DbId;
   title: string;
   content: string;
-  thumbnailUrl: string;
+  thumbnailURL: string;
   mediaType?: string;
-  mediaUrl?: string;
+  mediaURL?: string;
   viewCount: number;
   leadStory: boolean;
   created_at: string;

@@ -16,31 +16,44 @@ const Home: React.FC = () => {
 
   const { data: tagsData } = useQuery(tags.keys.all, tags.queries.all);
 
-  const mostViewed = data?.data.sort(article => article.viewCount);
+  const mostViewed = data?.data.sort((a, b) => b.viewCount - a.viewCount);
+  const topMostViewed = mostViewed?.slice(0, 5);
   data?.data[0].viewCount;
 
   return (
     <Container sx={{ mt: 12 }}>
+      <Typography
+        variant='h3'
+        fontFamily='Lexend'
+        fontWeight={400}
+        component='h1'
+      >
+        Welcome back!
+      </Typography>
       <Loading loading={isLoading} />
-      {mostViewed && (
-        <Category name='Popular articles' data={mostViewed}>
-          {item => (
+      {topMostViewed && (
+        <Category perView={1.7} name='Popular articles' data={topMostViewed}>
+          {article => (
             <ArticlePreview
               sx={{ m: 2 }}
-              articleId={item.id}
-              image={item.thumbnailUrl}
-              title={item.title}
+              articleId={article.id}
+              image={article.thumbnailURL}
+              title={article.title}
+              views={article.viewCount}
+              createdAt={article.created_at}
             />
           )}
         </Category>
       )}
+
+      {/* <pre>{JSON.stringify(topMostViewed, null, 2)}</pre> */}
 
       {tagsData && (
         <Category perView={2.4} name='Popular categories' data={tagsData.data}>
           {tag => <TagCard sx={{ m: 2 }} name={tag.name} image={tag.image} />}
         </Category>
       )}
-      <pre>{JSON.stringify(tagsData, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(mostViewed, null, 2)}</pre> */}
     </Container>
   );
 };

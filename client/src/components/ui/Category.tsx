@@ -24,16 +24,7 @@ const Category = <T,>({
         style={{ overflow: "none" }}
       >
         {data.map((item, index, arr) => (
-          <SwiperSlide key={index}>
-            {children(item, index, arr)}
-            {/* <ArticlePreview
-              sx={{ m: 2 }}
-              title='title'
-              description='description kfdqsjflkdsgsjmld'
-              image=''
-              createdAt=''
-            /> */}
-          </SwiperSlide>
+          <SwiperSlide key={index}>{children(item, index, arr)}</SwiperSlide>
         ))}
       </Swiper>
     </>
