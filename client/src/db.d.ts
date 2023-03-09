@@ -19,12 +19,14 @@ export interface Tag {
   updated_at: string;
 }
 
+export type MediaType = "AUDIO" | "IMAGE" | "VIDEO";
+
 export interface Article {
   id: DbId;
   title: string;
   content: string;
   thumbnailURL: string;
-  mediaType?: string;
+  mediaType?: MediaType;
   mediaURL?: string;
   viewCount: number;
   leadStory: boolean;

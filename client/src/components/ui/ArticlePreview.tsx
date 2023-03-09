@@ -31,11 +31,9 @@ const ArticlePreview: React.FC<
           {title}
         </Typography>
         <Typography gutterBottom>{description}</Typography>
-        {/* <If condition={createdAt && views}> */}
         <Typography color='gray' variant='caption'>
           {formatDate(createdAt as string)} • {views} views
         </Typography>
-        {/* </If> */}
       </CardContent>
     </Card>
   );

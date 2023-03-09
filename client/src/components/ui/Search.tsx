@@ -66,7 +66,7 @@ const Search: React.FC = () => {
         <SearchPreview
           articleId={result.id}
           title={result.title}
-          image={result.thumbnailUrl}
+          image={result.thumbnailURL}
         />
       ))}
       <If

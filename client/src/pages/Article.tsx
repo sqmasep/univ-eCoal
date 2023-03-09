@@ -18,10 +18,13 @@ const Article: React.FC<ArticleProps> = ({}) => {
     }
   );
   return (
-    <Container sx={{ mt: 8 }}>
-      <pre>{JSON.stringify(article, null, 2)}</pre>
+    <Container sx={{ mt: 16 }}>
+      <Typography variant='h2' component='h1'>
+        {article?.title}
+      </Typography>
 
-      <Typography>{article?.title}</Typography>
+      {article?.content}
+      <pre>{JSON.stringify(article, null, 2)}</pre>
     </Container>
   );
 };
