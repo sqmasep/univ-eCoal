@@ -22,50 +22,55 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->input('mediaType') == 'VIDEO') {
-            $request->validate([
-                'title' => 'required',
-                'content' => 'required',
-                'thumbnailURL' => 'required',
-                'mediaType' => 'required',
-                'mediaURL' => 'file|required',
-                'leadStory' => 'required',
-                'tags'=>'required'
-            ]);
-        } else {
-            $request->validate([
-                'title' => 'required',
-                'content' => 'required',
-                'mediaType' => 'required',
-                'mediaURL' => 'file|required',
-                'leadStory' => 'required',
-                'tags'=>'required'
-            ]);
-        }
-        //Make the media
-        $media = $request->file('mediaURL')->hashName();
-        $request->file('mediaURL')->move('upload', $media);
-        //Make thumbnailURL
-        if ($request->input('mediaType') == 'IMAGE') {
-            $thumbnailURL = $media;
-        } else if ($request->input('mediaType') == 'VIDEO') {//In React do that : If mediaType == VIDEO then make thumbnailURL required
-            $thumbnailURL = $request->input('thumbnailURL');
-        }
+        $role = $request->user()->role;
+        if ($role == 'ADMIN') {
+            if ($request->input('mediaType') == 'VIDEO') {
+                $request->validate([
+                    'title' => 'required',
+                    'content' => 'required',
+                    'thumbnailURL' => 'required',
+                    'mediaType' => 'required',
+                    'mediaURL' => 'file|required',
+                    'leadStory' => 'required',
+                    'tags' => 'required'
+                ]);
+            } else {
+                $request->validate([
+                    'title' => 'required',
+                    'content' => 'required',
+                    'mediaType' => 'required',
+                    'mediaURL' => 'file|required',
+                    'leadStory' => 'required',
+                    'tags' => 'required'
+                ]);
+            }
+            //Make the media
+            $media = $request->file('mediaURL')->hashName();
+            $request->file('mediaURL')->move('upload', $media);
+            //Make thumbnailURL
+            if ($request->input('mediaType') == 'IMAGE') {
+                $thumbnailURL = $media;
+            } else if ($request->input('mediaType') == 'VIDEO') {//In React do that : If mediaType == VIDEO then make thumbnailURL required
+                $thumbnailURL = $request->input('thumbnailURL');
+            }
 
-        $newArticle = Article::create([
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
-            'thumbnailURL' => $thumbnailURL,
-            'mediaType' => $request->input('mediaType'),
-            'mediaURL' => $media,
-            'leadStory' => $request->input('leadStory')
-        ]);
-        $newArticle->tags()->attach(
-            $request->input('tags')->foreach(function ($tag) {
-                return Tag::where('name', $tag)->first()->id;
-            })
-        );
-        return response($newArticle, 201);
+            $newArticle = Article::create([
+                'title' => $request->input('title'),
+                'content' => $request->input('content'),
+                'thumbnailURL' => $thumbnailURL,
+                'mediaType' => $request->input('mediaType'),
+                'mediaURL' => $media,
+                'leadStory' => $request->input('leadStory')
+            ]);
+            $newArticle->tags()->attach(
+                $request->input('tags')->foreach(function ($tag) {
+                    return Tag::where('name', $tag)->first()->id;
+                })
+            );
+            return response($newArticle, 201);
+        } else {
+            return response()->json(['message' => 'You are not an admin'], 401);
+        }
     }
 
     /**
