@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         $user = User::create([
             'name' => 'HugoAdmin',
             'email' => 'hugodemontadmin@hotmail.fr',
@@ -57,7 +56,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $article->tags()->attach([$tag1->id, $tag2->id]);
-        $article2->tags()->attach([$tag1->id]);
+        $article->tags()->attach([$tag1->id]);
 
     }
 }
