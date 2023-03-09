@@ -30,6 +30,7 @@ class ArticleController extends Controller
                 'mediaType' => 'required',
                 'mediaURL' => 'file|required',
                 'leadStory' => 'required',
+                'tags'=>'required'
             ]);
         } else {
             $request->validate([
@@ -38,6 +39,7 @@ class ArticleController extends Controller
                 'mediaType' => 'required',
                 'mediaURL' => 'file|required',
                 'leadStory' => 'required',
+                'tags'=>'required'
             ]);
         }
         //Make the media
@@ -58,6 +60,11 @@ class ArticleController extends Controller
             'mediaURL' => $media,
             'leadStory' => $request->input('leadStory')
         ]);
+        $newArticle->tags()->attach(
+            $request->input('tags')->foreach(function ($tag) {
+                return Tag::where('name', $tag)->first()->id;
+            })
+        );
         return response($newArticle, 201);
     }
 

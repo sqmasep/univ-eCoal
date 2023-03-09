@@ -20,7 +20,7 @@ class adminConfirmationStatus
         if ($role == 'ADMIN') {
             return $next($request);
         } else {
-            return response()->json(['message' => 'You are not confirmed to be admin'], 403);
+            return response()->json(['message' => 'You are not an admin'], 401);
         }
     }
 }

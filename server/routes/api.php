@@ -26,10 +26,10 @@ Route::group([
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-    Route::apiResource('articles', \App\Http\Controllers\ArticleController::class); // Api for the articles
+
     Route::apiResource('tags', \App\Http\Controllers\TagsController::class); // Api for the tags
-});
+   });
 
-Route::get('/search/{search}', [\App\Http\Controllers\ArticleController::class, "searchFunction"]);//Search for the search Bar
-Route::get('/tag/{tagId}', [\App\Http\Controllers\ArticleController::class, "searchFunctionByTag"]);//Search for article by tag
-
+Route::get('/search/{search}', [\App\Http\Controllers\ArticleController::class, 'searchFunction']);//Search for the search Bar
+Route::get('/tag/{tagId}', [\App\Http\Controllers\ArticleController::class, 'searchFunctionByTag']);//Search for article by tag
+Route::apiResource('articles', \App\Http\Controllers\ArticleController::class); // Api for the articles

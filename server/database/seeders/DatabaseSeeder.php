@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $tag1 = Tag::create([
-            'name' => 'ecoal23',
+            'name' => 'POP',
             'image' => 'https://backoffice.industrie-online.com/api/v1/image/41747?w=525&h=525']
         );
         $tag2 = Tag::create([
