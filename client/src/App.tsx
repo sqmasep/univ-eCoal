@@ -1,7 +1,12 @@
 import { CssBaseline, Stack, ThemeProvider, Typography } from "@mui/material";
 import React, { useState } from "react";
 import theme from "./lib/mui/theme";
-import { useRoutes, useLocation, RouteObject } from "react-router-dom";
+import {
+  useRoutes,
+  useLocation,
+  RouteObject,
+  Navigate,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import { QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { axios, queryClient } from "./lib/query/client";
@@ -20,10 +25,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import useUser from "./store/userStore";
+import useUser, { Utils } from "./store/userStore";
 import Article from "./pages/Article";
+import { User } from "./db";
+import Admin from "./pages/Admin";
 
-const routes: (isConnected: boolean) => RouteObject[] = isConnected => [
+const routes: (user: (User & Utils) | null) => RouteObject[] = user => [
   {
     path: "/",
     element: (
@@ -31,9 +38,6 @@ const routes: (isConnected: boolean) => RouteObject[] = isConnected => [
         <Home />
       </AnimatedPage>
     ),
-  },
-  {
-    path: "/articles",
   },
   {
     path: "/articles/:articleId",
@@ -49,7 +53,9 @@ const routes: (isConnected: boolean) => RouteObject[] = isConnected => [
   },
   {
     path: "/login",
-    element: (
+    element: !!user ? (
+      <Navigate to='/profile' />
+    ) : (
       <AnimatedPage>
         <Login />
       </AnimatedPage>
@@ -57,7 +63,9 @@ const routes: (isConnected: boolean) => RouteObject[] = isConnected => [
   },
   {
     path: "/register",
-    element: (
+    element: !!user ? (
+      <Navigate to='/profile' />
+    ) : (
       <AnimatedPage>
         <Register />
       </AnimatedPage>
@@ -65,11 +73,25 @@ const routes: (isConnected: boolean) => RouteObject[] = isConnected => [
   },
   {
     path: "/profile",
-    element: (
+    element: !user ? (
+      <Navigate to='/login' />
+    ) : (
       <AnimatedPage>
         <Profile />
       </AnimatedPage>
     ),
+  },
+  {
+    path: "/admin",
+    element: (
+      // user?.role !== "ADMIN" ? (
+      //   <Navigate to='/profile' />
+      // ) : (
+      <AnimatedPage>
+        <Admin />
+      </AnimatedPage>
+    ),
+    // ),
   },
   {
     path: "*",
@@ -82,28 +104,9 @@ const routes: (isConnected: boolean) => RouteObject[] = isConnected => [
 ];
 
 const App: React.FC = () => {
-  const { user } = useUser(
-    state => ({
-      user: state.user,
-    }),
-    shallow
-  );
+  const user = useUser(state => state.user);
 
-  const theUser = useQuery(
-    ["user", "me"],
-    async () =>
-      axios.get("/user", {
-        headers: {
-          Authorization: `Bearer ${user?.token}`,
-        },
-      }),
-    {
-      enabled: !!user?.token,
-    }
-  );
-  console.log("theuser: ", theUser);
-
-  const element = useRoutes(routes(!!user));
+  const element = useRoutes(routes(user));
   const location = useLocation();
 
   if (!element) return null;

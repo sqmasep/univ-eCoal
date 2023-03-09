@@ -10,6 +10,7 @@ import {
   Alert,
   Button,
   Container,
+  Link as MuiLink,
   Snackbar,
   Stack,
   TextField,
@@ -17,28 +18,16 @@ import {
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { useNavigate } from "react-router-dom";
-import { shallow } from "zustand/shallow";
+import { Link, useNavigate } from "react-router-dom";
 import TextFields from "../components/TextFields";
 
 const Login: React.FC = () => {
-  const { setUser } = useUser(state => ({ setUser: state.setUser }), shallow);
+  const setUser = useUser(state => state.setUser);
   const navigate = useNavigate();
   const { isSuccess, data, isLoading, isError, error, mutate } = useMutation({
     mutationFn: loginMutationFn,
   });
   const token = data?.data.access_token;
-
-  if (isSuccess && token) {
-    const { userData, access_token } = data.data;
-    console.log("connected!!");
-    setUser({
-      ...userData,
-      token: access_token,
-    });
-
-    navigate("/");
-  }
 
   const handleSubmit = (
     values: LoginValues,
@@ -48,30 +37,46 @@ const Login: React.FC = () => {
     helpers.resetForm();
   };
 
+  if (isSuccess && token) {
+    const { userData, access_token } = data.data;
+
+    setUser({
+      ...userData,
+      token: access_token,
+    });
+  }
+
   return (
-    <Container>
+    <Container sx={{ mt: 16 }}>
       <Formik
         initialValues={loginInitialValues}
         validationSchema={formikLoginSchema}
         onSubmit={handleSubmit}
       >
         {({ values, touched, errors }) => (
-          <Stack mt={8} gap={1}>
-            <Typography sx={{ my: 2 }} variant='h3' component='h1'>
-              Log in!
-            </Typography>
-            <TextFields of={loginFields} errors={errors} touched={touched} />
-            <Button sx={{ mt: 2 }} variant='contained'>
-              I log in!
-            </Button>
-          </Stack>
+          <Form>
+            <Stack gap={1}>
+              <Typography sx={{ my: 2 }} variant='h3' component='h1'>
+                Log in!
+              </Typography>
+              <TextFields of={loginFields} errors={errors} touched={touched} />
+              <Button type='submit' sx={{ mt: 2 }} variant='contained'>
+                I log in!
+              </Button>
+            </Stack>
+          </Form>
         )}
       </Formik>
-      <Snackbar open={isSuccess || isError} autoHideDuration={4000}>
+      {/* <Snackbar open={isSuccess || isError} autoHideDuration={4000}>
         <Alert severity={isSuccess ? "success" : "error"}>
           {isSuccess ? "You're now logged in!" : <>{error}</>}
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
+
+      <Typography mt={4}>
+        You don't have an account ?{" "}
+        <MuiLink component={Link}>Create one now!</MuiLink>
+      </Typography>
     </Container>
   );
 };

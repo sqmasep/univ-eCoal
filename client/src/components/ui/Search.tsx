@@ -36,7 +36,7 @@ const Search: React.FC = () => {
   );
 
   return (
-    <Container sx={{ mt: 8 }}>
+    <Container sx={{ mt: 16 }}>
       <Typography variant='h3' component='h1'>
         Search
       </Typography>

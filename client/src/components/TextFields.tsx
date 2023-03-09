@@ -24,7 +24,7 @@ const TextFields = <T extends FieldMap>({
           key={field.name}
           as={TextField}
           label={field.label}
-          error={touched[field.name] && errors[field.name]}
+          error={!!(touched[field.name] && errors[field.name])}
           helperText={touched[field.name] && errors[field.name]}
           name={field.name}
           fullWidth

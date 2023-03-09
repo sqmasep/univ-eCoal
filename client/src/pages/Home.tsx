@@ -4,11 +4,13 @@ import Loading from "@/components/ui/Loading";
 import TagCard from "@/components/ui/TagCard";
 import { articles } from "@/lib/query/articles";
 import { tags } from "@/lib/query/tags";
+import useUser from "@/store/userStore";
 import { Button, Container, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { If } from "react-if";
 
 const Home: React.FC = () => {
+  const user = useUser(state => state.user);
   const { data, isLoading, isError } = useQuery(
     articles.keys.all,
     articles.queries.all
@@ -21,14 +23,14 @@ const Home: React.FC = () => {
   data?.data[0].viewCount;
 
   return (
-    <Container sx={{ mt: 12 }}>
+    <Container sx={{ mt: 16 }}>
       <Typography
         variant='h3'
         fontFamily='Lexend'
         fontWeight={400}
         component='h1'
       >
-        Welcome back!
+        Welcome back{user && ` ${user.name}`}!
       </Typography>
       <Loading loading={isLoading} />
       {topMostViewed && (

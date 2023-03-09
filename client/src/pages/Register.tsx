@@ -28,13 +28,6 @@ const Register: React.FC = () => {
   });
   const token = data?.data.access_token;
 
-  if (isSuccess && token) {
-    const { userData, access_token } = data.data;
-    setUser({ ...userData, token: access_token });
-    console.log("connected!!!!!!");
-    // navigate("/");
-  }
-
   const handleSubmit = (
     values: RegisterValues,
     helpers: FormikHelpers<RegisterValues>
@@ -43,8 +36,14 @@ const Register: React.FC = () => {
     helpers.resetForm();
   };
 
+  if (isSuccess && token) {
+    const { userData, access_token } = data.data;
+
+    setUser({ ...userData, token: access_token });
+  }
+
   return (
-    <Container>
+    <Container sx={{ mt: 16 }}>
       <Formik
         initialValues={registerInitialValues}
         validationSchema={formikRegisterSchema}

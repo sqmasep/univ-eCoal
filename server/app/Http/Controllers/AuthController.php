@@ -26,13 +26,12 @@ class AuthController extends Controller
             'password' => Hash::make($validatedData['password']),
             'role' => 'USER',
         ]);
-        $userData = $request->user();
         $token = $user->createToken('auth_token')->plainTextToken;//token authentification (identify user)
         return response()->json([ //send Json response to client
                 'access_token' => $token,//Session Cookie (like)
                 'token_type' => 'Bearer',
-                'userData'=>$userData,
-            ]) . redirect('/');
+                'userData'=>$user,
+            ]);
 
     }
 
@@ -43,19 +42,14 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(['message' => 'Invalid login details'], 401);
-        }
-
         $user = User::whereRaw('email = ?', $request['email'])->firstOrFail();//get user
 
         $token = $user->createToken('auth_token')->plainTextToken;
-        $userData = $request->user();
         return response()->json([//send to react app
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'userData'=>$userData,
-            'msg'=>'Conneted'
+            'userData'=>$user,
+            'msg'=>'Connected'
         ]);
     }
 

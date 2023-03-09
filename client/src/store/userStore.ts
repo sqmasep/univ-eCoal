@@ -2,7 +2,7 @@ import { User } from "@/db";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface Utils {
+export interface Utils {
   token: string;
 }
 

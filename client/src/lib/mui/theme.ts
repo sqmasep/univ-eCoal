@@ -79,6 +79,7 @@ theme = createTheme(theme, {
           transition: ".2s",
           "&:is(:hover, :focus-visible)": {
             transform: `translate(${2 * COEFFICIENT}em, ${2 * COEFFICIENT}em)`,
+            boxShadow: "none",
           },
         },
       },
@@ -88,6 +89,14 @@ theme = createTheme(theme, {
         notchedOutline: {
           border: theme.styling.outline(0.5),
           boxShadow: theme.styling.shadow(0.5),
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        root: {
+          outline: theme.styling.outline(0.75),
+          borderRadius: 3,
         },
       },
     },

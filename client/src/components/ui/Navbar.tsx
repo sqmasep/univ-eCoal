@@ -1,7 +1,11 @@
-import { Container, Stack } from "@mui/material";
+import useUser from "@/store/userStore";
+import { Box, Button, Container, Stack } from "@mui/material";
+import { If } from "react-if";
+import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
 const Navbar: React.FC = () => {
+  const user = useUser(state => state.user);
   return (
     <Stack
       position='fixed'
@@ -16,7 +20,24 @@ const Navbar: React.FC = () => {
       borderBottom={theme => theme.styling.outline(1)}
     >
       <Container>
-        <Logo />
+        <Stack
+          direction='row'
+          alignItems='center'
+          justifyContent='space-between'
+          gap={1}
+        >
+          <Logo />
+          <If condition={!user}>
+            <Stack direction='row' gap={2}>
+              <Button sx={{ px: 2 }} LinkComponent={Link} to='/login'>
+                Log in
+              </Button>
+              <Button variant='contained' LinkComponent={Link} to='/register'>
+                Sign up
+              </Button>
+            </Stack>
+          </If>
+        </Stack>
       </Container>
     </Stack>
   );
