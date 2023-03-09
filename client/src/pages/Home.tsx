@@ -1,8 +1,10 @@
+import ArticlePreview from "@/components/ui/ArticlePreview";
 import Category from "@/components/ui/Category";
 import Loading from "@/components/ui/Loading";
 import { articles } from "@/lib/query/articles";
 import { Button, Container, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { If } from "react-if";
 
 const Home: React.FC = () => {
   const { data, isLoading, isError } = useQuery(
@@ -10,11 +12,18 @@ const Home: React.FC = () => {
     articles.queries.all
   );
 
-  return (
-    <Container>
-      <Loading loading={isLoading} />
+  const mostViewed = data?.data.sort(article => article.viewCount);
+  data?.data[0].viewCount;
 
-      <Category name='Popular articles' />
+  return (
+    <Container sx={{ mt: 12 }}>
+      <Loading loading={isLoading} />
+      {mostViewed && (
+        <Category name='Popular articles' data={mostViewed}>
+          {item => <ArticlePreview title={item.title} />}
+        </Category>
+      )}
+      <pre>{JSON.stringify(mostViewed, null, 2)}</pre>
     </Container>
   );
 };

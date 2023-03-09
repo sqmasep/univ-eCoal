@@ -37,6 +37,10 @@ const LowerNav: React.FC = () => {
       width='100%'
       borderRadius='.5em .5em 0 0'
       overflow='hidden'
+      sx={{
+        backgroundColor: theme => theme.palette.background.default,
+      }}
+      zIndex={theme => theme.zIndex.appBar}
     >
       <AnimatePresence>
         <Stack width='100%' direction='row'>

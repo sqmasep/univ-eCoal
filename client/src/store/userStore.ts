@@ -1,26 +1,31 @@
+import { User } from "@/db";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+interface Utils {
+  token: string;
+}
+
 interface UserStore {
-  email: string | null;
-  name: string | null;
-  token: string | null;
-  isConnected: boolean;
-  setEmail: (email: string) => void;
-  setName: (name: string) => void;
-  setToken: (token: string) => void;
+  user: (User & Utils) | null;
+  setUser: (user: User & Utils) => void;
+  logOut: () => void;
 }
 
 const useUser = create<UserStore>()(
   persist(
     (set, get) => ({
-      email: null,
-      name: null,
-      token: null,
-      isConnected: false,
-      setEmail: email => set(() => ({ email })),
-      setName: name => set(() => ({ name })),
-      setToken: token => set(() => ({ token })),
+      user: null,
+      setUser: user =>
+        set(() => ({
+          user,
+        })),
+      logOut: () => {
+        console.log("logout!");
+        set(() => ({
+          user: null,
+        }));
+      },
     }),
     {
       name: "doremi-user",
