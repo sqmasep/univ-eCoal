@@ -111,13 +111,9 @@ class ArticleController extends Controller
         return Article::whereRaw("title like '%'||?||'%'", [$searchContent])->get(); // Search Data from $searchContent and
     }
 
-    public function searchFunctionByTag(string $nameTag)//Doesn't work
+    public function searchFunctionByTag(string $tagId)//Doesn't work
     {
-        $tag = Tag::find($nameTag);
-        // get articles by tag with article_tag table
-        return DB::table('article_tag')
-            ->join('articles', 'article_tag.article_id', '=', 'articles.id')
-            ->select('articles.*')
-            ->where('article_tag.tag_id', '=', $tag->id);
+        $tag = Tag::find($tagId);
+        return $tag->articles;
     }
 }
