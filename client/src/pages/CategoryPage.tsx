@@ -39,6 +39,7 @@ const CategoryPage: React.FC = () => {
         {data?.data.map(article => (
           <Grid item key={article.id} lg={3} sm={6} xs={12}>
             <ArticlePreview
+              summonTransition
               articleId={article.id}
               title={article.title}
               image={article.thumbnailURL}

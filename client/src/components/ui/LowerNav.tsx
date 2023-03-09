@@ -60,6 +60,10 @@ const LowerNav: React.FC = () => {
                 py={2}
                 justifyContent='center'
                 alignItems='center'
+                sx={{
+                  color: theme =>
+                    theme.palette.mode === "dark" ? "white" : "black",
+                }}
               >
                 <If condition={isActive}>
                   <MotionBox
@@ -68,7 +72,7 @@ const LowerNav: React.FC = () => {
                     sx={{
                       inset: 0,
                       zIndex: -1,
-                      backgroundColor: "#ddd9",
+                      backgroundColor: "#ddd5",
                     }}
                   />
                 </If>

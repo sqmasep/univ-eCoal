@@ -1,6 +1,9 @@
+import ConfirmDialog from "@/components/ui/ConfirmDialog";
+import Loading from "@/components/ui/Loading";
+import { queryClient } from "@/lib/query/client";
 import { tag } from "@/lib/query/mutation/tag";
 import { tags } from "@/lib/query/tags";
-import { Add, Delete } from "@mui/icons-material";
+import { Add, Close, Delete } from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -21,7 +24,7 @@ interface CreateTagForm {
 }
 
 const AdminTags: React.FC = () => {
-  const { data } = useQuery(tags.keys.all, tags.queries.all);
+  const { data, isLoading } = useQuery(tags.keys.all, tags.queries.all);
   const [createTag, toggleCreate] = useToggle(false);
   const createMutation = useMutation({
     mutationFn: tag.create,
@@ -31,8 +34,11 @@ const AdminTags: React.FC = () => {
     values: CreateTagForm,
     helpers: FormikHelpers<CreateTagForm>
   ) => {
-    createMutation.mutate(values.name);
+    console.log("create tag");
+    createMutation.mutate(values);
     helpers.resetForm();
+    toggleCreate(false);
+    queryClient.invalidateQueries(tags.keys.all);
   };
 
   return (
@@ -47,14 +53,25 @@ const AdminTags: React.FC = () => {
         </Button>
       </Stack>
       <Stack mt={4} gap={4}>
-        {data?.data.map(tag => (
-          <AdminTag key={tag.id} name={tag.name} tagId={tag.id} />
-        ))}
+        {data?.data.length ? (
+          data.data.map(tag => (
+            <AdminTag key={tag.id} name={tag.name} tagId={tag.id} />
+          ))
+        ) : isLoading ? (
+          <Loading loading />
+        ) : (
+          <Typography>No categories yet! :(</Typography>
+        )}
       </Stack>
       <Dialog open={createTag}>
+        <Stack alignItems='end'>
+          <IconButton onClick={() => toggleCreate(false)}>
+            <Close />
+          </IconButton>
+        </Stack>
         <Formik initialValues={{ name: "" }} onSubmit={handleCreate}>
           <Form>
-            <Typography variant='h4' component='p'>
+            <Typography mb={2} variant='h4' component='p'>
               Create a new category
             </Typography>
             <Field
@@ -64,7 +81,8 @@ const AdminTags: React.FC = () => {
               name='name'
               label='Category name'
             />
-            <Button type='submit' variant='contained' fullWidth>
+
+            <Button sx={{ mt: 2 }} type='submit' variant='contained' fullWidth>
               Create
             </Button>
           </Form>
@@ -80,11 +98,21 @@ interface AdminTagProps {
 }
 
 const AdminTag: React.FC<AdminTagProps> = ({ name, tagId }) => {
+  const [deleteDialog, toggleDelete] = useToggle(false);
+
+  const deleteMutation = useMutation({
+    mutationFn: tag.delete,
+  });
+
+  const handleDelete = () => {
+    deleteMutation.mutate(tagId);
+    queryClient.invalidateQueries(tags.keys.all);
+  };
   return (
     <Card>
       <CardContent>
         <Stack alignItems='end'>
-          <IconButton>
+          <IconButton onClick={() => toggleDelete()}>
             <Delete />
           </IconButton>
         </Stack>
@@ -92,6 +120,13 @@ const AdminTag: React.FC<AdminTagProps> = ({ name, tagId }) => {
           {name}
         </Typography>
       </CardContent>
+      <ConfirmDialog
+        open={deleteDialog}
+        toggle={toggleDelete}
+        title={`Delete tag "${name}"?`}
+        description='This will be deleted forever!'
+        onConfirm={handleDelete}
+      />
     </Card>
   );
 };
