@@ -7,11 +7,11 @@ import AdminTags from "./AdminTags";
 
 const tabs = [
   {
-    label: "articles",
+    label: "Articles",
     value: "articles",
   } as const,
   {
-    label: "Catégories",
+    label: "Categories",
     value: "tags",
   } as const,
 ] satisfies { label: string; value: string }[];
@@ -38,7 +38,7 @@ const Admin: React.FC = () => {
       <Typography mt={2} variant='h2' fontWeight={400}>
         Admin panel
       </Typography>
-      <Tabs sx={{ mt: 4 }} value={selectedTab} onChange={handleChange}>
+      <Tabs sx={{ my: 4 }} value={selectedTab} onChange={handleChange}>
         {tabs.map(tab => (
           <Tab value={tab.value} label={tab.label} />
         ))}

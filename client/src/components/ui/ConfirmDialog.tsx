@@ -11,21 +11,32 @@ interface ConfirmDialogProps {
   title: string;
   description: string;
   open: boolean;
+  toggle: (nextValue?: any) => void;
+  confirm: () => void;
 }
 
 const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   description,
   title,
   open,
+  toggle,
 }) => {
   return (
     <Dialog open={open}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{description}</DialogContent>
       <DialogActions>
-        <Stack direction='row' gap={1}>
-          <Button onClick={() => {}}>No! cancel!</Button>
-          <Button onClick={() => {}}>Yes, confirm</Button>
+        <Stack direction='row' gap={2}>
+          <Button onClick={() => toggle(false)}>No! cancel!</Button>
+          <Button
+            variant='contained'
+            onClick={() => {
+              confirm();
+              toggle(false);
+            }}
+          >
+            Yes, confirm
+          </Button>
         </Stack>
       </DialogActions>
     </Dialog>

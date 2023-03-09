@@ -1,19 +1,36 @@
+import ArticlePreview from "@/components/ui/ArticlePreview";
 import Loading from "@/components/ui/Loading";
 import { articles } from "@/lib/query/articles";
-import { Container } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
 const CategoryPage: React.FC = () => {
   const { tag } = useParams();
-  const { data } = useQuery(
+  const { data, isLoading, isError } = useQuery(
     articles.keys.byTag(tag),
     articles.queries.byTag(tag)
   );
 
   return (
-    <Container>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+    <Container sx={{ mt: 16 }}>
+      <Typography variant='h2' component='h1'>
+        {tag?.replace(tag[0], tag[0].toUpperCase())}
+      </Typography>
+
+      <Grid mt={8} container gap={4}>
+        {data?.data.map(article => (
+          <Grid item key={article.id} lg={3} sm={6} xs={12}>
+            <ArticlePreview
+              articleId={article.id}
+              title={article.title}
+              image={article.thumbnailURL}
+              views={article.viewCount}
+              createdAt={article.created_at}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </Container>
   );
 };

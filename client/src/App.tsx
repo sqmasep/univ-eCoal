@@ -1,4 +1,10 @@
-import { CssBaseline, Stack, ThemeProvider, Typography } from "@mui/material";
+import {
+  Box,
+  CssBaseline,
+  Stack,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import React, { useState } from "react";
 import theme from "./lib/mui/theme";
 import {
@@ -112,7 +118,7 @@ const App: React.FC = () => {
   if (!element) return null;
 
   return (
-    <>
+    <Box my={16}>
       <ReactQueryDevtools position='top-right' initialIsOpen={false} />
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -122,7 +128,7 @@ const App: React.FC = () => {
           </AnimatePresence>
         </Layout>
       </ThemeProvider>
-    </>
+    </Box>
   );
 };
 

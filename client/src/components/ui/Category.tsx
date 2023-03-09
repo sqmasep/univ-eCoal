@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ArticlePreview from "./ArticlePreview";
 
@@ -14,10 +14,13 @@ const Category = <T,>({
   data,
   perView = 1.2,
   children,
-}: CategoryProps<T>) => {
+  ...props
+}: CategoryProps<T> & Omit<React.ComponentProps<typeof Box>, "children">) => {
   return (
-    <>
-      <Typography variant='h3'>{name}</Typography>
+    <Box {...props}>
+      <Typography variant='h4' component='p'>
+        {name}
+      </Typography>
       <Swiper
         slidesPerView={perView}
         spaceBetween={1}
@@ -27,7 +30,7 @@ const Category = <T,>({
           <SwiperSlide key={index}>{children(item, index, arr)}</SwiperSlide>
         ))}
       </Swiper>
-    </>
+    </Box>
   );
 };
 

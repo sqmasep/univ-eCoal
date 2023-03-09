@@ -51,7 +51,7 @@ const Profile: React.FC = () => {
               <ListItemIcon>
                 <AdminPanelSettings />
               </ListItemIcon>
-              <ListItemText>Espace Admin</ListItemText>
+              <ListItemText>Admin Panel</ListItemText>
             </ListItemButton>
           </ListItem>
         )}

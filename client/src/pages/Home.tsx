@@ -20,21 +20,24 @@ const Home: React.FC = () => {
 
   const mostViewed = data?.data.sort((a, b) => b.viewCount - a.viewCount);
   const topMostViewed = mostViewed?.slice(0, 5);
-  data?.data[0].viewCount;
+  const mostRecent = data?.data.sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
+  const topMostRecent = mostRecent?.slice(0, 5);
 
   return (
     <Container sx={{ mt: 16 }}>
-      <Typography
-        variant='h3'
-        fontFamily='Lexend'
-        fontWeight={400}
-        component='h1'
-      >
+      <Typography variant='h1' fontFamily='Lexend' fontWeight={300}>
         Welcome back{user && ` ${user.name}`}!
       </Typography>
       <Loading loading={isLoading} />
       {topMostViewed && (
-        <Category perView={1.7} name='Popular articles' data={topMostViewed}>
+        <Category
+          mt={8}
+          perView={1.7}
+          name='Popular articles'
+          data={topMostViewed}
+        >
           {article => (
             <ArticlePreview
               sx={{ m: 2 }}
@@ -48,14 +51,25 @@ const Home: React.FC = () => {
         </Category>
       )}
 
-      {/* <pre>{JSON.stringify(topMostViewed, null, 2)}</pre> */}
-
       {tagsData && (
         <Category perView={2.4} name='Popular categories' data={tagsData.data}>
           {tag => <TagCard sx={{ m: 2 }} name={tag.name} image={tag.image} />}
         </Category>
       )}
-      {/* <pre>{JSON.stringify(mostViewed, null, 2)}</pre> */}
+      {topMostRecent && (
+        <Category perView={2.4} data={topMostRecent} name='Most recents'>
+          {recent => (
+            <ArticlePreview
+              sx={{ m: 2 }}
+              articleId={recent.id}
+              title={recent.title}
+              image={recent.thumbnailURL}
+              views={recent.viewCount}
+              createdAt={recent.created_at}
+            />
+          )}
+        </Category>
+      )}
     </Container>
   );
 };

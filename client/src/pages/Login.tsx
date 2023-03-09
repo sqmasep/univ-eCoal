@@ -75,7 +75,9 @@ const Login: React.FC = () => {
 
       <Typography mt={4}>
         You don't have an account ?{" "}
-        <MuiLink component={Link}>Create one now!</MuiLink>
+        <MuiLink component={Link} to='/register'>
+          Create one now!
+        </MuiLink>
       </Typography>
     </Container>
   );

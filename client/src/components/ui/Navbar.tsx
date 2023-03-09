@@ -29,10 +29,10 @@ const Navbar: React.FC = () => {
           <Logo />
           <If condition={!user}>
             <Stack direction='row' gap={2}>
-              <Button sx={{ px: 2 }} LinkComponent={Link} to='/login'>
+              <Button sx={{ px: 2 }} component={Link} to='/login'>
                 Log in
               </Button>
-              <Button variant='contained' LinkComponent={Link} to='/register'>
+              <Button variant='contained' component={Link} to='/register'>
                 Sign up
               </Button>
             </Stack>

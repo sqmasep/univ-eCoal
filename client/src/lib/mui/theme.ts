@@ -96,7 +96,23 @@ theme = createTheme(theme, {
       styleOverrides: {
         root: {
           outline: theme.styling.outline(0.75),
-          borderRadius: 3,
+          borderRadius: 2 * theme.shape.borderRadius,
+        },
+      },
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          padding: theme.spacing(2),
+          outline: theme.styling.outline(1),
+        },
+      },
+    },
+    MuiList: {
+      styleOverrides: {
+        root: {
+          outline: theme.styling.outline(1),
+          borderRadius: 2 * theme.shape.borderRadius,
         },
       },
     },

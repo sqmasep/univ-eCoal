@@ -11,6 +11,7 @@ import {
   Alert,
   Button,
   Container,
+  Link as MuiLink,
   Snackbar,
   Stack,
   TextField,
@@ -18,7 +19,7 @@ import {
 } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { Field, Form, Formik, FormikHelpers } from "formik";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
   const setUser = useUser(state => state.setUser);
@@ -72,9 +73,13 @@ const Register: React.FC = () => {
           {isSuccess ? "You're now logged in!" : <>{isError && data}</>}
         </Alert>
       </Snackbar>
-      <pre>{JSON.stringify(data?.data?.access_token, null, 2)}</pre>
 
-      <pre>{JSON.stringify(error, null, 2)}</pre>
+      <Typography mt={4}>
+        Already have an account?{" "}
+        <MuiLink component={Link} to='/login'>
+          Log in!
+        </MuiLink>
+      </Typography>
     </Container>
   );
 };
