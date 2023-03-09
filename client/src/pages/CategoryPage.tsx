@@ -1,9 +1,9 @@
 import ArticlePreview from "@/components/ui/ArticlePreview";
 import Loading from "@/components/ui/Loading";
 import { articles } from "@/lib/query/articles";
-import { Container, Grid, Typography } from "@mui/material";
+import { Button, Container, Grid, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const CategoryPage: React.FC = () => {
   const { tag } = useParams();
@@ -17,6 +17,23 @@ const CategoryPage: React.FC = () => {
       <Typography variant='h2' component='h1'>
         {tag?.replace(tag[0], tag[0].toUpperCase())}
       </Typography>
+
+      {data?.data && !data?.data.length && (
+        <>
+          <Typography
+            mt={4}
+            mb={2}
+            variant='h3'
+            component='h2'
+            fontWeight={300}
+          >
+            No article found! :(
+          </Typography>
+          <Button variant='contained' component={Link} to='/'>
+            Go back to the homepage
+          </Button>
+        </>
+      )}
 
       <Grid mt={8} container gap={4}>
         {data?.data.map(article => (

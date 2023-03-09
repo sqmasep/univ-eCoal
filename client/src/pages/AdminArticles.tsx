@@ -1,8 +1,10 @@
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import { articles } from "@/lib/query/articles";
+import { queryClient } from "@/lib/query/client";
 import { article } from "@/lib/query/mutation/articles";
-import { Delete } from "@mui/icons-material";
+import { Add, Delete } from "@mui/icons-material";
 import {
+  Button,
   Card,
   CardContent,
   IconButton,
@@ -14,9 +16,27 @@ import { useToggle } from "react-use";
 
 const AdminArticles: React.FC = () => {
   const { data } = useQuery(articles.keys.all, articles.queries.all);
+  const [createDialog, toggleCreate] = useToggle(false);
+  const createMutation = useMutation({
+    mutationFn: article.create,
+  });
+
+  const handleCreate = () => {
+    createMutation.mutate({});
+  };
+
   return (
     <>
-      <Stack gap={4}>
+      <Stack direction='row' justifyContent='end'>
+        <Button
+          onClick={() => toggleCreate()}
+          startIcon={<Add />}
+          variant='contained'
+        >
+          New article
+        </Button>
+      </Stack>
+      <Stack mt={4} gap={4}>
         {data?.data.map(article => (
           <Article
             articleId={article.id}
@@ -40,6 +60,9 @@ const Article: React.FC<AdminArticleProps> = ({ title, image, articleId }) => {
   const [dialogOpen, toggleDialog] = useToggle(false);
   const deleteMutation = useMutation({
     mutationFn: article.delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries(articles.keys.all);
+    },
   });
 
   const handleDelete = () => {
@@ -63,7 +86,7 @@ const Article: React.FC<AdminArticleProps> = ({ title, image, articleId }) => {
         toggle={toggleDialog}
         title={`Delete the article "${title}"?`}
         description='You will lost this article forever!'
-        confirm={handleDelete}
+        onConfirm={handleDelete}
       />
     </Card>
   );

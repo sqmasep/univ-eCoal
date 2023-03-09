@@ -16,7 +16,7 @@ const Category = <T,>({
   children,
   ...props
 }: CategoryProps<T> & Omit<React.ComponentProps<typeof Box>, "children">) => {
-  return (
+  return data.length ? (
     <Box {...props}>
       <Typography variant='h4' component='p'>
         {name}
@@ -31,7 +31,7 @@ const Category = <T,>({
         ))}
       </Swiper>
     </Box>
-  );
+  ) : null;
 };
 
 export default Category;

@@ -26,7 +26,7 @@ const tabMap: Record<TabValues, React.ReactNode> = {
 const Admin: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<TabValues>(tabs[0].value);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: TabValues) => {
+  const handleChange = (e: React.SyntheticEvent, newValue: TabValues) => {
     setSelectedTab(newValue);
   };
 
@@ -38,7 +38,7 @@ const Admin: React.FC = () => {
       <Typography mt={2} variant='h2' fontWeight={400}>
         Admin panel
       </Typography>
-      <Tabs sx={{ my: 4 }} value={selectedTab} onChange={handleChange}>
+      <Tabs sx={{ mt: 4, mb: 2 }} value={selectedTab} onChange={handleChange}>
         {tabs.map(tab => (
           <Tab value={tab.value} label={tab.label} />
         ))}

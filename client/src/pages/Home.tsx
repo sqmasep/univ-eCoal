@@ -5,7 +5,7 @@ import TagCard from "@/components/ui/TagCard";
 import { articles } from "@/lib/query/articles";
 import { tags } from "@/lib/query/tags";
 import useUser from "@/store/userStore";
-import { Button, Container, Typography } from "@mui/material";
+import { Button, Container, Stack, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { If } from "react-if";
 
@@ -27,14 +27,14 @@ const Home: React.FC = () => {
 
   return (
     <Container sx={{ mt: 16 }}>
-      <Typography variant='h1' fontFamily='Lexend' fontWeight={300}>
+      <Typography mb={8} variant='h1' fontFamily='Lexend' fontWeight={300}>
         Welcome back{user && ` ${user.name}`}!
       </Typography>
       <Loading loading={isLoading} />
       {topMostViewed && (
         <Category
           mt={8}
-          perView={1.7}
+          perView={1.1}
           name='Popular articles'
           data={topMostViewed}
         >
@@ -52,12 +52,13 @@ const Home: React.FC = () => {
       )}
 
       {tagsData && (
-        <Category perView={2.4} name='Popular categories' data={tagsData.data}>
+        <Category perView={1.2} name='Popular categories' data={tagsData.data}>
           {tag => <TagCard sx={{ m: 2 }} name={tag.name} image={tag.image} />}
         </Category>
       )}
+
       {topMostRecent && (
-        <Category perView={2.4} data={topMostRecent} name='Most recents'>
+        <Category perView={1.2} data={topMostRecent} name='Most recents'>
           {recent => (
             <ArticlePreview
               sx={{ m: 2 }}

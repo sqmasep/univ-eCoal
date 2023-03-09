@@ -1,0 +1,13 @@
+{
+  "theme_color": "#6E73FB",
+  "background_color": "#FFF",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "name": "doremi. - Your music newspaper",
+  "short_name": "doremi.",
+  "icons": {
+    "name": "favicon.svg"
+  },
+  "description": "doremi, Your music newspaper"
+}

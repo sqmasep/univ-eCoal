@@ -12,7 +12,7 @@ interface ConfirmDialogProps {
   description: string;
   open: boolean;
   toggle: (nextValue?: any) => void;
-  confirm: () => void;
+  onConfirm: () => void;
 }
 
 const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
@@ -20,6 +20,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   title,
   open,
   toggle,
+  onConfirm,
 }) => {
   return (
     <Dialog open={open}>
@@ -31,7 +32,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
           <Button
             variant='contained'
             onClick={() => {
-              confirm();
+              onConfirm();
               toggle(false);
             }}
           >
