@@ -6,6 +6,7 @@ const articlesKeys = {
   all: ["articles"] as const,
   byId: (id: string) => [...articlesKeys.all, { filter: id }] as const,
   byTag: (tag: string | undefined) => [...articlesKeys.all, { tag }] as const,
+  bySearch: (search: string) => [...articlesKeys.all, { search }] as const,
 };
 
 const articleQueries = {
@@ -13,6 +14,8 @@ const articleQueries = {
   byId: (id: string) => async () => await axios.get<Article>(`/articles/${id}`),
   byTag: (tag: string | undefined) => async () =>
     await axios.get<Article[]>(`/articles?tag=${tag}`),
+  bySearch: (search: string) => async () =>
+    await axios.get<Article[]>(`/search/${search}`),
 } satisfies QueryFields<typeof articlesKeys>;
 
 export const articles = {

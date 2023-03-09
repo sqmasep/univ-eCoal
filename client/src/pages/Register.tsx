@@ -21,7 +21,7 @@ import { Field, Form, Formik, FormikHelpers } from "formik";
 import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
-  const setToken = useUser(state => state.setToken);
+  const setUser = useUser(state => state.setUser);
   const navigate = useNavigate();
   const { isSuccess, data, isLoading, isError, error, mutate } = useMutation({
     mutationFn: registerMutationFn,
@@ -29,7 +29,9 @@ const Register: React.FC = () => {
   const token = data?.data.access_token;
 
   if (isSuccess && token) {
-    setToken(token);
+    const { userData, access_token } = data.data;
+    setUser({ ...userData, token: access_token });
+    console.log("connected!!!!!!");
     // navigate("/");
   }
 

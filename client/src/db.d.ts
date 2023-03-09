@@ -8,11 +8,13 @@ export interface User {
   role: "USER" | "ADMIN";
   password: string;
   remember_token: string;
+  created_at: string;
 }
 
 export interface Tag {
   id: DbId;
   name: string;
+  image: string;
   created_at: string;
   updated_at: string;
 }

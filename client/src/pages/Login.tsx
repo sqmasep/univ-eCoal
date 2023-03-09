@@ -18,10 +18,11 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { useNavigate } from "react-router-dom";
+import { shallow } from "zustand/shallow";
 import TextFields from "../components/TextFields";
 
 const Login: React.FC = () => {
-  const setToken = useUser(state => state.setToken);
+  const { setUser } = useUser(state => ({ setUser: state.setUser }), shallow);
   const navigate = useNavigate();
   const { isSuccess, data, isLoading, isError, error, mutate } = useMutation({
     mutationFn: loginMutationFn,
@@ -29,7 +30,12 @@ const Login: React.FC = () => {
   const token = data?.data.access_token;
 
   if (isSuccess && token) {
-    setToken(token);
+    const { userData, access_token } = data.data;
+    console.log("connected!!");
+    setUser({
+      ...userData,
+      token: access_token,
+    });
 
     navigate("/");
   }
