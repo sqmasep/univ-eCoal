@@ -21,6 +21,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import useUser from "./store/userStore";
+import Article from "./pages/Article";
 
 const routes: (isConnected: boolean) => RouteObject[] = isConnected => [
   {
@@ -35,7 +36,8 @@ const routes: (isConnected: boolean) => RouteObject[] = isConnected => [
     path: "/articles",
   },
   {
-    path: "/articles/:id",
+    path: "/articles/:articleId",
+    element: <Article />,
   },
   {
     path: "/tags/:tag",

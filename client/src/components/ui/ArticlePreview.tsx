@@ -16,7 +16,7 @@ const ArticlePreview: React.FC<
     <Card {...props} component={Link} to={`/articles/${articleId}`}>
       <CardMedia image={image} />
       <CardContent>
-        <Typography variant='h3' component='p' gutterBottom>
+        <Typography variant='h5' component='p' gutterBottom>
           {title}
         </Typography>
         <Typography gutterBottom>{description}</Typography>

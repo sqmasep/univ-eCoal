@@ -11,7 +11,8 @@ const articlesKeys = {
 
 const articleQueries = {
   all: async () => await axios.get<Article[]>("/articles"),
-  byId: (id: string) => async () => await axios.get<Article>(`/articles/${id}`),
+  byId: (id: string) => async () =>
+    (await axios.get<Article>(`/articles/${id}`)).data,
   byTag: (tag: string | undefined) => async () =>
     await axios.get<Article[]>(`/articles?tag=${tag}`),
   bySearch: (search: string) => async () =>
