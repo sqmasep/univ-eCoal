@@ -31,5 +31,5 @@ Route::group([
 });
 
 Route::get('/search/{search}', [\App\Http\Controllers\ArticleController::class, "searchFunction"]);//Search for the search Bar
-Route::get('/articles/bytag={tag}', [\App\Http\Controllers\ArticleController::class, "searchFunctionByTag"]);//Search for article by tag TODO : DOESN'T WORK
+Route::get('/articles?tag={nameTag}', [\App\Http\Controllers\ArticleController::class, "searchFunctionByTag"]);//Search for article by tag TODO : DOESN'T WORK
 

@@ -18,16 +18,16 @@ class DatabaseSeeder extends Seeder
     {
 
         $user = User::create([
-            'name'=>'HugoAdmin',
-            'email'=> 'hugodemontadmin@hotmail.fr',
-            'password'=>'undeuxtrois',
-            'role'=>'ADMIN',
+            'name' => 'HugoAdmin',
+            'email' => 'hugodemontadmin@hotmail.fr',
+            'password' => 'undeuxtrois',
+            'role' => 'ADMIN',
         ]);
         $user = User::create([
-            'name'=>'Hugo',
-            'email'=> 'hugodemont@hotmail.fr',
-            'password'=>'undeuxtrois',
-            'role'=>'USER',
+            'name' => 'Hugo',
+            'email' => 'hugodemont@hotmail.fr',
+            'password' => 'undeuxtrois',
+            'role' => 'USER',
         ]);
         $article = Article::create([
             'title' => 'Welcome to ecoal23',
@@ -46,10 +46,18 @@ class DatabaseSeeder extends Seeder
             'leadStory' => false,
         ]);
 
-        $tag1 = Tag::create(['name' => 'ecoal23']);
-        $tag2 = Tag::create(['name' => 'react']);
+        $tag1 = Tag::create([
+            'name' => 'ecoal23',
+            'image' => 'https://backoffice.industrie-online.com/api/v1/image/41747?w=525&h=525']
+        );
+        $tag2 = Tag::create([
+            'name' => 'react',
+            'image'=>'https://cdn.shopify.com/s/files/1/1530/4015/products/IMG_0008_1090x.jpg?v=1670194640'
+
+        ]);
 
         $article->tags()->attach([$tag1->id, $tag2->id]);
+        $article->tags()->attach([$tag1->id]);
 
     }
 }
