@@ -17,6 +17,7 @@ const CategoryPage: React.FC = () => {
       <Typography variant='h2' component='h1'>
         {tag?.replace(tag[0], tag[0].toUpperCase())}
       </Typography>
+      <Loading loading={isLoading} />
 
       {data?.data && !data?.data.length && (
         <>

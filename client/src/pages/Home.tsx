@@ -1,14 +1,12 @@
 import List from "@/components/List";
 import ArticlePreview from "@/components/ui/ArticlePreview";
 import Category from "@/components/ui/Category";
-import Loading from "@/components/ui/Loading";
 import TagCard from "@/components/ui/TagCard";
 import { articles } from "@/lib/query/articles";
 import { tags } from "@/lib/query/tags";
 import useUser from "@/store/userStore";
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { If } from "react-if";
 
 const Home: React.FC = () => {
   const user = useUser(state => state.user);

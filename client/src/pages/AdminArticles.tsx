@@ -11,7 +11,6 @@ import {
   CardMedia,
   Dialog,
   IconButton,
-  Input,
   Stack,
   TextField,
   Typography,

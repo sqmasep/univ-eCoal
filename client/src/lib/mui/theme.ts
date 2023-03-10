@@ -26,10 +26,6 @@ let theme = createTheme({
       `${coeff * COEFFICIENT}em ${coeff * COEFFICIENT}em 0 black`,
   },
   palette: {
-    // mode: "dark",
-    background: {
-      // default: "#222",
-    },
     primary: {
       main: "#6E73FB",
     },

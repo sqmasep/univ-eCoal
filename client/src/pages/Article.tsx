@@ -1,6 +1,6 @@
 import MediaHandler from "@/components/MediaHandler";
 import { articles } from "@/lib/query/articles";
-import { Box, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
@@ -24,11 +24,6 @@ const Article: React.FC<ArticleProps> = ({}) => {
         {article?.title}
       </Typography>
 
-      {/* <Typography
-        dangerouslySetInnerHTML={{
-          _html: article?.content,
-        }}
-      /> */}
       {article?.mediaType && article?.mediaURL && (
         <MediaHandler type={article?.mediaType} url={article?.mediaURL} />
       )}

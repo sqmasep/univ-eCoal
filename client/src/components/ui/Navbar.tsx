@@ -1,5 +1,5 @@
 import useUser from "@/store/userStore";
-import { Box, Button, Container, Stack, useMediaQuery } from "@mui/material";
+import { Button, Container, Stack, useMediaQuery } from "@mui/material";
 import { If } from "react-if";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";

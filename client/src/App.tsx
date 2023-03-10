@@ -91,6 +91,7 @@ const routes: (user: (User & Utils) | null) => RouteObject[] = user => [
   {
     path: "/admin",
     element: (
+      // FIXME: infinite loop
       // user?.role !== "ADMIN" ? (
       //   <Navigate to='/profile' />
       // ) : (

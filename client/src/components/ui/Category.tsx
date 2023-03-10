@@ -1,6 +1,5 @@
-import { Box, Card, Skeleton, Stack, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
-import ArticlePreview from "./ArticlePreview";
 
 interface CategoryProps<T> {
   perView?: number;

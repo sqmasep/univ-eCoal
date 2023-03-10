@@ -1,25 +1,17 @@
 import { tags } from "@/lib/query/tags";
-import {
-  Box,
-  Chip,
-  Container,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Chip, Container, Stack, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { blue } from "@mui/material/colors";
 import { useState } from "react";
 import { articles } from "@/lib/query/articles";
 import { useDebounce } from "react-use";
-import { Else, If } from "react-if";
+import { If } from "react-if";
 import ArticlePreview from "./ArticlePreview";
-import SearchPreview from "./SearchPreview";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { cardAnimation } from "@/animations/card";
 
-const MotionBox = motion(Box);
+const MotionStack = motion(Stack);
 
 const Search: React.FC = () => {
   const [search, setSearch] = useState("");
@@ -72,7 +64,8 @@ const Search: React.FC = () => {
       <If condition={isSearching}>
         <Typography>Searching...</Typography>
       </If>
-      <MotionBox
+      <MotionStack
+        gap={4}
         variants={cardAnimation.parent}
         initial='hidden'
         animate='show'
@@ -88,7 +81,7 @@ const Search: React.FC = () => {
             image={result.thumbnailURL}
           />
         ))}
-      </MotionBox>
+      </MotionStack>
       <If
         condition={
           !isSearching &&

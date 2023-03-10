@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { If } from "react-if";
 import { Link } from "react-router-dom";
 
 export interface ArticlePreviewProps {
