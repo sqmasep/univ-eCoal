@@ -8,7 +8,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import Home from "./pages/Home";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AnimatePresence, motion } from "framer-motion";
 import CategoryPage from "./pages/CategoryPage";
 import Layout from "./components/ui/Layout";
@@ -123,7 +122,6 @@ const App: React.FC = () => {
 
   return (
     <Box my={16}>
-      <ReactQueryDevtools position='top-right' initialIsOpen={false} />
       <ThemeProvider theme={theme}>
         <MotionStack
           position='fixed'
