@@ -20,9 +20,10 @@ const Article: React.FC<ArticleProps> = ({}) => {
   );
   return (
     <Container sx={{ mt: 16 }}>
-      <Typography variant='h2' component='h1'>
+      <Typography mb={2} variant='h2' component='h1'>
         {article?.title}
       </Typography>
+      <img src={article?.thumbnailURL} style={{ maxWidth: "100%" }} />
 
       {article?.mediaType && article?.mediaURL && (
         <MediaHandler type={article?.mediaType} url={article?.mediaURL} />
