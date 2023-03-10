@@ -1,7 +1,8 @@
 import useUser from "@/store/userStore";
 import { ArrowBack } from "@mui/icons-material";
 import { Container, IconButton, Tab, Tabs, Typography } from "@mui/material";
-import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AdminArticles from "./AdminArticles";
 import AdminTags from "./AdminTags";
@@ -18,6 +19,12 @@ const tabs = [
 ] satisfies { label: string; value: string }[];
 
 type TabValues = typeof tabs[number]["value"];
+
+const AnimatedTabSection: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  return <motion.div>{children}</motion.div>;
+};
 
 const tabMap: Record<TabValues, React.ReactNode> = {
   articles: <AdminArticles />,
@@ -48,7 +55,19 @@ const Admin: React.FC = () => {
         ))}
       </Tabs>
 
-      {tabMap[selectedTab]}
+      <AnimatePresence mode='wait'>
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 50, opacity: 0 }}
+          transition={{
+            duration: 0.2,
+          }}
+          key={selectedTab}
+        >
+          {tabMap[selectedTab]}
+        </motion.div>
+      </AnimatePresence>
     </Container>
   );
 };

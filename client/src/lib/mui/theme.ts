@@ -36,7 +36,7 @@ let theme = createTheme({
   },
   typography: {
     allVariants: {
-      fontFamily: "Neue Plak",
+      fontFamily: ["Neue Plak", "Lexend", "sans-serif"].join(","),
       fontWeight: 900,
       fontStretch: "extra-expanded",
     },

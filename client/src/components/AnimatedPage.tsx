@@ -31,7 +31,7 @@ const AnimatedPage: React.FC<AnimatedPageProps> = ({ children }) => {
         scale: 0.95,
         transformOrigin: "top",
         opacity: 0,
-        transition: { duration: 0.1 },
+        transition: { duration: 0.2 },
       }}
       transition={{ duration: 0.35 }}
       // initial={{

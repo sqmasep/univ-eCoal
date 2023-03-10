@@ -1,11 +1,12 @@
 import useUser from "@/store/userStore";
-import { Box, Button, Container, Stack } from "@mui/material";
+import { Box, Button, Container, Stack, useMediaQuery } from "@mui/material";
 import { If } from "react-if";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
 const Navbar: React.FC = () => {
   const user = useUser(state => state.user);
+  const isSmallPhone = useMediaQuery("(max-width: 395px");
   return (
     <Stack
       position='fixed'
@@ -27,7 +28,7 @@ const Navbar: React.FC = () => {
           gap={1}
         >
           <Logo />
-          <If condition={!user}>
+          <If condition={!user && !isSmallPhone}>
             <Stack direction='row' gap={2}>
               <Button sx={{ px: 2 }} component={Link} to='/login'>
                 Log in

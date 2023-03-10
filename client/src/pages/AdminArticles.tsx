@@ -3,7 +3,7 @@ import Loading from "@/components/ui/Loading";
 import { articles } from "@/lib/query/articles";
 import { queryClient } from "@/lib/query/client";
 import { article } from "@/lib/query/mutation/articles";
-import { Add, Delete, Edit } from "@mui/icons-material";
+import { Add, Close, Delete, Edit } from "@mui/icons-material";
 import {
   Button,
   Card,
@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, FormikHelpers } from "formik";
 import { useToggle } from "react-use";
 
 const AdminArticles: React.FC = () => {
@@ -58,7 +58,17 @@ const AdminArticles: React.FC = () => {
           <Typography>No articles yet! :(</Typography>
         )}
       </Stack>
-      <Dialog open={createDialog}>
+      <Dialog fullWidth open={createDialog}>
+        <Stack mb={1} direction='row' justifyContent='end' alignItems='end'>
+          <IconButton onClick={toggleCreate}>
+            <Close />
+          </IconButton>
+        </Stack>
+
+        <Typography mb={2} variant='h4' component='p'>
+          New article
+        </Typography>
+
         <Formik initialValues={{}} onSubmit={handleCreate}>
           {({ handleChange, handleBlur, values, errors, touched }) => (
             <Form>
@@ -67,10 +77,9 @@ const AdminArticles: React.FC = () => {
                 <Button
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  // value={}
-                  // name='file'
                   variant='contained'
                   component='label'
+                  sx={{ mt: 2 }}
                 >
                   Upload media
                   <input hidden type='file' accept='image/*' />
@@ -80,7 +89,6 @@ const AdminArticles: React.FC = () => {
           )}
         </Formik>
       </Dialog>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
     </>
   );
 };
@@ -89,6 +97,10 @@ interface AdminArticleProps {
   articleId: number;
   title: string;
   image: string;
+}
+
+interface EditForm {
+  title: string;
 }
 
 const Article: React.FC<AdminArticleProps> = ({ title, image, articleId }) => {
@@ -110,9 +122,9 @@ const Article: React.FC<AdminArticleProps> = ({ title, image, articleId }) => {
     deleteMutation.mutate(articleId);
   };
 
-  const handleEdit = () => {
-    console.log("edited");
-    // editMutation.mutate();
+  const handleEdit = (values: EditForm, helpers: FormikHelpers<EditForm>) => {
+    editMutation.mutate(values);
+    helpers.resetForm();
   };
 
   return (
@@ -139,14 +151,26 @@ const Article: React.FC<AdminArticleProps> = ({ title, image, articleId }) => {
         onConfirm={handleDelete}
       />
       <Dialog open={editDialogOpen}>
+        <Stack mb={1} direction='row' justifyContent='end' alignItems='end'>
+          <IconButton onClick={toggleEdit}>
+            <Close />
+          </IconButton>
+        </Stack>
+        <Typography mb={4} variant='h4' component='p'>
+          Edit article
+        </Typography>
         <Formik initialValues={{ title }} onSubmit={handleEdit}>
           <Form>
             <Field
               as={TextField}
+              fullWidth
               name='title'
               label='Title'
               defaultValue={title}
             />
+            <Button sx={{ mt: 2 }} type='submit' fullWidth variant='contained'>
+              Update
+            </Button>
           </Form>
         </Formik>
       </Dialog>

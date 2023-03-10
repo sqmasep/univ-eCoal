@@ -1,3 +1,4 @@
+import List from "@/components/List";
 import ArticlePreview from "@/components/ui/ArticlePreview";
 import Category from "@/components/ui/Category";
 import Loading from "@/components/ui/Loading";
@@ -34,10 +35,10 @@ const Home: React.FC = () => {
       <Typography mb={8} variant='h1' fontFamily='Lexend' fontWeight={300}>
         Welcome back{user && ` ${user.name}`}!
       </Typography>
-      {/* <Loading loading={} /> */}
+
       <Category
         isLoading={isArticlesLoading}
-        mt={8}
+        mt={10}
         perView={1.1}
         name='Popular articles'
         data={topMostViewed}
@@ -59,6 +60,7 @@ const Home: React.FC = () => {
         perView={1.2}
         name='Popular categories'
         data={tagsData?.data}
+        mt={10}
       >
         {tag => <TagCard sx={{ m: 2 }} name={tag.name} image={tag.image} />}
       </Category>
@@ -67,6 +69,7 @@ const Home: React.FC = () => {
         perView={1.2}
         data={topMostRecent}
         name='Most recents'
+        mt={10}
       >
         {recent => (
           <ArticlePreview
@@ -79,6 +82,25 @@ const Home: React.FC = () => {
           />
         )}
       </Category>
+
+      <Stack gap={2} mt={10}>
+        <Typography mb={4} variant='h4' component='h2'>
+          All articles
+        </Typography>
+        {data?.data && (
+          <List of={data.data} gap={4} gridKey={article => article.id}>
+            {article => (
+              <ArticlePreview
+                articleId={article.id}
+                image={article.thumbnailURL}
+                title={article.title}
+                views={article.viewCount}
+                createdAt={article.created_at}
+              />
+            )}
+          </List>
+        )}
+      </Stack>
     </Container>
   );
 };

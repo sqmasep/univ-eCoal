@@ -21,7 +21,6 @@ const useUser = create<UserStore>()(
           user,
         })),
       logOut: () => {
-        console.log("logout!");
         set(() => ({
           user: null,
         }));

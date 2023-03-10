@@ -34,7 +34,6 @@ const AdminTags: React.FC = () => {
     values: CreateTagForm,
     helpers: FormikHelpers<CreateTagForm>
   ) => {
-    console.log("create tag");
     createMutation.mutate(values);
     helpers.resetForm();
     toggleCreate(false);

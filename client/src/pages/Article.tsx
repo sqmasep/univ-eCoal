@@ -24,16 +24,14 @@ const Article: React.FC<ArticleProps> = ({}) => {
         {article?.title}
       </Typography>
 
-      {/* <Box
+      {/* <Typography
         dangerouslySetInnerHTML={{
           _html: article?.content,
         }}
       /> */}
-      {/* {article?.content} */}
       {article?.mediaType && article?.mediaURL && (
         <MediaHandler type={article?.mediaType} url={article?.mediaURL} />
       )}
-      <pre>{JSON.stringify(article, null, 2)}</pre>
     </Container>
   );
 };
