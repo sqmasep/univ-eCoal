@@ -8,6 +8,8 @@ import {
   Button,
   Card,
   CardContent,
+  CardMedia,
+  Dialog,
   IconButton,
   Input,
   Stack,
