@@ -1,6 +1,5 @@
 import { Box, Card, Skeleton, Stack, Typography } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
 import ArticlePreview from "./ArticlePreview";
 
 interface CategoryProps<T> {
@@ -27,8 +26,6 @@ const Category = <T,>({
         </Typography>
         <Swiper
           slidesPerView={perView}
-          modules={[Pagination]}
-          pagination
           autoplay={{
             delay: 5000,
           }}
