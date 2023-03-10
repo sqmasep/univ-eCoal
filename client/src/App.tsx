@@ -47,15 +47,27 @@ const routes: (user: (User & Utils) | null) => RouteObject[] = user => [
   },
   {
     path: "/articles/:articleId",
-    element: <Article />,
+    element: (
+      <AnimatedPage>
+        <Article />
+      </AnimatedPage>
+    ),
   },
   {
     path: "/tags/:tag",
-    element: <CategoryPage />,
+    element: (
+      <AnimatedPage>
+        <CategoryPage />
+      </AnimatedPage>
+    ),
   },
   {
     path: "/search",
-    element: <Search />,
+    element: (
+      <AnimatedPage>
+        <Search />
+      </AnimatedPage>
+    ),
   },
   {
     path: "/login",
@@ -119,7 +131,6 @@ const App: React.FC = () => {
 
   return (
     <Box my={16}>
-      <ReactQueryDevtools position='top-right' initialIsOpen={false} />
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Layout>

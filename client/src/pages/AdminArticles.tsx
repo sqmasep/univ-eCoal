@@ -7,6 +7,7 @@ import {
   Button,
   Card,
   CardContent,
+  CardMedia,
   IconButton,
   Stack,
   Typography,
@@ -71,6 +72,7 @@ const Article: React.FC<AdminArticleProps> = ({ title, image, articleId }) => {
 
   return (
     <Card>
+      <CardMedia src={image} />
       <CardContent>
         <Stack direction='row' gap={1} justifyContent='end'>
           <IconButton onClick={() => toggleDialog(true)}>

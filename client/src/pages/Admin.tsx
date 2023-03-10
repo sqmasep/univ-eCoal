@@ -1,3 +1,4 @@
+import useUser from "@/store/userStore";
 import { ArrowBack } from "@mui/icons-material";
 import { Container, IconButton, Tab, Tabs, Typography } from "@mui/material";
 import { useState } from "react";
@@ -24,6 +25,7 @@ const tabMap: Record<TabValues, React.ReactNode> = {
 };
 
 const Admin: React.FC = () => {
+  const user = useUser(state => state.user);
   const [selectedTab, setSelectedTab] = useState<TabValues>(tabs[0].value);
 
   const handleChange = (e: React.SyntheticEvent, newValue: TabValues) => {
@@ -35,9 +37,11 @@ const Admin: React.FC = () => {
       <IconButton component={Link} to='/profile'>
         <ArrowBack fontSize='large' />
       </IconButton>
-      <Typography mt={2} variant='h2' fontWeight={400}>
-        Admin panel
-      </Typography>
+      {user?.role === "ADMIN" && (
+        <Typography mt={2} variant='h2' fontWeight={400}>
+          Admin panel
+        </Typography>
+      )}
       <Tabs sx={{ mt: 4, mb: 2 }} value={selectedTab} onChange={handleChange}>
         {tabs.map(tab => (
           <Tab value={tab.value} label={tab.label} />

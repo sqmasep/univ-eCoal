@@ -40,8 +40,8 @@ class DatabaseSeeder extends Seeder
             'title' => 'Welcome to routes landsssss',
             'content' => '<h1>Un article test</h1><p>hello test <strong>Lens</strong>. notEnjoy !</p>',
             'thumbnailURL' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Rust_programming_language_black_logo.svg/2048px-Rust_programming_language_black_logo.svg.png',
-            'mediaType' => 'VIDEO',
-            'mediaURL' => '/ecoal.mp4',
+            'mediaType' => 'AUDIO',
+            'mediaURL' => 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
             'leadStory' => false,
         ]);
 
