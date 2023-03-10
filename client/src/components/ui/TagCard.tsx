@@ -32,7 +32,7 @@ const TagCard: React.FC<TagCardProps & React.ComponentProps<typeof Card>> = ({
         )}
         <CardContent>
           <Typography variant='h4' component='h2'>
-            {name}
+            {name.replace(name[0], name[0].toUpperCase())}
           </Typography>
         </CardContent>
       </CardActionArea>
