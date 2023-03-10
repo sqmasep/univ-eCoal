@@ -1,3 +1,4 @@
+import { cardAnimation } from "@/animations/card";
 import { formatDate } from "@/utils/dateFormat";
 import {
   Card,
@@ -6,6 +7,7 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
+import { motion } from "framer-motion";
 import { If } from "react-if";
 import { Link } from "react-router-dom";
 
@@ -16,13 +18,32 @@ export interface ArticlePreviewProps {
   description?: string;
   views: number;
   createdAt?: string;
+  summonTransition?: boolean;
 }
 
+const MotionCard = motion(Card);
 const ArticlePreview: React.FC<
-  ArticlePreviewProps & React.ComponentProps<typeof Card>
-> = ({ description, articleId, image, title, createdAt, views, ...props }) => {
+  ArticlePreviewProps & React.ComponentProps<typeof MotionCard>
+> = ({
+  description,
+  articleId,
+  image,
+  title,
+  createdAt,
+  views,
+  summonTransition = false,
+  ...props
+}) => {
+  const motionProps = summonTransition
+    ? {
+        variants: cardAnimation.children,
+        initial: "hidden",
+        animate: "show",
+      }
+    : undefined;
+
   return (
-    <Card {...props}>
+    <MotionCard {...motionProps} {...props}>
       <CardActionArea component={Link} to={`/articles/${articleId}`}>
         {image && (
           <CardMedia
@@ -44,7 +65,7 @@ const ArticlePreview: React.FC<
           </Typography>
         </CardContent>
       </CardActionArea>
-    </Card>
+    </MotionCard>
   );
 };
 

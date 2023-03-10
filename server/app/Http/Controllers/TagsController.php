@@ -21,7 +21,8 @@ class TagsController extends Controller
     public function store(Request $request)
     {
         $newTag = Tag::create([
-            'name'=>$request->input('name'),
+            'name' => $request->input('name'),
+            'image' => $request->input('image'),
         ]);
         return response($newTag, 201);
     }

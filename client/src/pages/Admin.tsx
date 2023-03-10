@@ -44,7 +44,7 @@ const Admin: React.FC = () => {
       )}
       <Tabs sx={{ mt: 4, mb: 2 }} value={selectedTab} onChange={handleChange}>
         {tabs.map(tab => (
-          <Tab value={tab.value} label={tab.label} />
+          <Tab key={tab.value} value={tab.value} label={tab.label} />
         ))}
       </Tabs>
 

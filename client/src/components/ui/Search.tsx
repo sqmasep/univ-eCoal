@@ -1,5 +1,12 @@
 import { tags } from "@/lib/query/tags";
-import { Chip, Container, Stack, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Chip,
+  Container,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { blue } from "@mui/material/colors";
@@ -9,6 +16,10 @@ import { useDebounce } from "react-use";
 import { Else, If } from "react-if";
 import ArticlePreview from "./ArticlePreview";
 import SearchPreview from "./SearchPreview";
+import { AnimatePresence, motion } from "framer-motion";
+import { cardAnimation } from "@/animations/card";
+
+const MotionBox = motion(Box);
 
 const Search: React.FC = () => {
   const [search, setSearch] = useState("");
@@ -47,28 +58,37 @@ const Search: React.FC = () => {
         onChange={e => setSearch(e.target.value)}
       />
 
-      <If condition={isSearching}>
-        <Typography>Searching...</Typography>
-      </If>
-      <Stack mt={2} direction='row' gap={1}>
+      <Stack my={2} direction='row' gap={1}>
         {tagsData?.data.map((tag, i) => (
           <Chip
             sx={{ backgroundColor: blue[500] }}
             key={tag.id}
-            label={tag.name}
+            label={tag.name.toUpperCase()}
             component={Link}
             to={`/tags/${tag.name}`}
           />
         ))}
       </Stack>
-
-      {searchResults?.data.map(result => (
-        <SearchPreview
-          articleId={result.id}
-          title={result.title}
-          image={result.thumbnailURL}
-        />
-      ))}
+      <If condition={isSearching}>
+        <Typography>Searching...</Typography>
+      </If>
+      <MotionBox
+        variants={cardAnimation.parent}
+        initial='hidden'
+        animate='show'
+      >
+        {searchResults?.data.map(result => (
+          <ArticlePreview
+            summonTransition
+            key={result.id}
+            articleId={result.id}
+            title={result.title}
+            views={result.viewCount}
+            createdAt={result.created_at}
+            image={result.thumbnailURL}
+          />
+        ))}
+      </MotionBox>
       <If
         condition={
           !isSearching &&
