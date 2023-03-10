@@ -60,7 +60,7 @@ const ArticlePreview: React.FC<
           </Typography>
           <Typography gutterBottom>{description}</Typography>
           <Typography color='gray' variant='caption'>
-            {formatDate(createdAt as string)} • {views} views
+            {formatDate(createdAt as string)} • {views} view{views > 1 && "s"}
           </Typography>
         </CardContent>
       </CardActionArea>
